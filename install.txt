@@ -1,0 +1,99 @@
+XBS MetaTags
+(c) A Kitson (http://xoobs.net), UK, 2006
+
+See the user documentation by pointing your browser at the tagshelp.html file in the module root drectory.
+
+See Systems documentation by pointing your browser at the /docs/ directory of this module
+
+This module is intended for Xoops 2.0.13, 2.0.14 and 2.2.4  However please note that the admin tab menu under V2.2 is not fully formed in appearance.  It works though!
+
+Installation
+1. Install module as per any normal Xoops module.
+2. Edit /xoopsroot/footer.php
+
+For Xoops 2.0.13 installations
+------------------------------
+
+Before the line (at line 71)
+
+		$xoopsTpl->display($xoopsConfig['theme_set'].'/theme.html');<br><br>
+
+insert
+
+	/**
+	 * Hack by A Kitson to enable XBS MetaTags
+	 */
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	}
+	/**
+	 * End hack
+	 */
+
+For Xoops 2.0.14 installations
+------------------------------
+
+before the line (at line 39)
+
+	$xoopsTpl->display('db:'.$xoopsOption['template_main']);
+	
+Insert
+
+	/**
+	 * Hack by A Kitson to enable XBS MetaTags
+	 */
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	}
+	/**
+	 * End hack
+	 */
+	 
+before the line (at line 75)
+
+	$xoTheme->render();
+	
+Insert 
+
+	/**
+	 * Hack by A Kitson to enable XBS MetaTags
+	 */
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	}
+	/**
+	 * End hack
+	 */
+
+	
+For Xoops 2.2.4 installations
+-----------------------------
+
+Before the line (at line 49)
+
+		    //serve page
+		    $GLOBALS['xTheme']->display($template);
+
+Insert
+
+	/**
+	 * Hack by A Kitson to enable XBS MetaTags
+	 */
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	}
+	/**
+	 * End hack
+	 */
+
+
+3. Go to the Metatags administration pages and select 'Update'.  Choose the modules that you want to include and hit the button.  You will go to the page index list.  Edit each one to set page title, description and enter a set of keywords if you wish.  To see these keyords in your page set the method to 'db', otherwise use one of the auto methods to generate keywords on the fly.  Please note that you may get some duplicate pages in the page index.  This is because some modules use the same page for a variety of user side menu options. Delete any duplicates.
+
+4. The module configuration (preferences) allows you to set default behaviour for the module.
+
+5. To turn off MetaTags, simply deactivate it from the main Modules Administration screen.  There is no need to remove your hack from footer.php.
+
+Read the available documentation by pointing your browser at the /modules/xbs_tags/docs/ directory.  Also read the /modules/xbs_tags/metatags_info.php file to see how you can adapt your modules for inclusion under the metatags scheme.
+
+
+support at http://xoobs.net

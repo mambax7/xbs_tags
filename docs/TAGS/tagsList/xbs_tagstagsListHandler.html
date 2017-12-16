@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class xbs_tagstagsListHandler</title>
+  <link rel="stylesheet" href="../../media/stylesheet.css" />
+  <script src="../../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../../media/images/plus.gif";
+	imgMinus.src = "../../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class xbs_tagstagsListHandler
+</h2> (line <span class="linenumber">89</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+XoopsObjectHandler
+   |
+   --xbs_tagstagsListHandler</pre>
+<p>
+	<b><i>Located in File: <a href="_tags_class_tagsList_php.html">/class/tagsList.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+<br /><hr />
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="var-title">
+    <span class="var-type">string</span>
+    <a href="#var$classname" title="details" class="property"><strong>$classname</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">string</span>
+    <a href="#var$ins_tagname" title="details" class="property"><strong>$ins_tagname</strong></a>
+</div>
+<hr />
+<a name="var$classname" id="var$classname"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../../media/images/PublicProperty.gif" border="0" /> <strong class="property">$classname =  'tagsList'</strong> (line <span class="linenumber">96</span>)
+ </h4>
+<h4>Data type : string</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Set in descendent constructor to name of object that this handler handles</h5>
+<ul>
+	</ul>
+</div>
+<a name="var$ins_tagname" id="var$ins_tagname"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../../media/images/PublicProperty.gif" border="0" /> <strong class="property">$ins_tagname = 'ins_tagsList'</strong> (line <span class="linenumber">101</span>)
+ </h4>
+<h4>Data type : string</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Set in ancestor to name of unique ID generator tag for use with insert function</h5>
+<ul>
+	</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="constantsTabpage">
+
+<h2 class="tab">Class Constants</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "constantsTabpage" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+				
+    <div class="method-definition">
+            <span class="method-result"><a href="../../TAGS/tagsList/tagsList.html">object tagsList</a></span>
+        <a href="#methodcreate" title="details" class="method-name">&amp;create</a>
+        ([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$isNew</span> = <span class="var-default">true</span>], <span class="var-type">boolean</span>&nbsp;<span class="var-name">$isNew=true</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">bool</span>
+        <a href="#methoddelete" title="details" class="method-name">delete</a>
+        (<span class="var-type">Object</span>&nbsp;<span class="var-name">&$obj</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">int</span>
+        <a href="#methoderrno" title="details" class="method-name">errno</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">string</span>
+        <a href="#methoderror" title="details" class="method-name">error</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">object descendent</span>
+        <a href="#methodget" title="details" class="method-name">&amp;get</a>
+        (<span class="var-type">int</span>&nbsp;<span class="var-name">$id</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">array</span>
+        <a href="#methodgetAllLists" title="details" class="method-name">&amp;getAllLists</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodgetByKey" title="details" class="method-name">&amp;getByKey</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span>, <span class="var-type">int</span>&nbsp;<span class="var-name">$pid</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">string</span>
+        <a href="#methodgetError" title="details" class="method-name">getError</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">bool</span>
+        <a href="#methodinsert" title="details" class="method-name">insert</a>
+        (<span class="var-type">Object</span>&nbsp;<span class="var-name">&$obj</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsetError" title="details" class="method-name">setError</a>
+        (<span class="var-type">mixed</span>&nbsp;<span class="var-name">$errnum</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$errstr</span> = <span class="var-default">''</span>], <span class="var-type">int</span>&nbsp;<span class="var-name">$errnum=0</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$errstr=''</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodtagsListHandler" title="details" class="method-name">tagsListHandler</a>
+        (<span class="var-type">xoopsDatabase</span>&nbsp;<span class="var-name">&$db</span>)
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="methodcreate" id="methodcreate"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method create</strong> (line <span class="linenumber">173</span>)
+ </h4> 
+<h4><i><a href="../../TAGS/tagsList/tagsList.html">object tagsList</a></i> <strong>&amp;create(
+[mixed
+$isNew = true], boolean
+$isNew=true)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Create a new object</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>boolean $isNew=true</strong>: create a new object and tell it is new.  If False then create object but set it as not new</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - else False if failure</li>
+		</ul>
+</div>
+<a name="methoddelete" id="methoddelete"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method delete</strong> (line <span class="linenumber">303</span>)
+ </h4> 
+<h4><i>bool</i> <strong>delete(
+Object
+&$obj)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Delete object from the database</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Object &$obj</strong>: tagsList Object to delete</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE on success else False</li>
+		</ul>
+</div>
+<a name="methoderrno" id="methoderrno"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method errno</strong> (line <span class="linenumber">144</span>)
+ </h4> 
+<h4><i>int</i> <strong>errno(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Return last error number</h5>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<a name="methoderror" id="methoderror"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method error</strong> (line <span class="linenumber">153</span>)
+ </h4> 
+<h4><i>string</i> <strong>error(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Return last error message</h5>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<a name="methodget" id="methodget"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method get</strong> (line <span class="linenumber">196</span>)
+ </h4> 
+<h4><i>object descendent</i> <strong>&amp;get(
+int
+$id)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Get all data for object given id.</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>int $id</strong>: data item internal identifier</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - of tagsList</li>
+		</ul>
+</div>
+<a name="methodgetAllLists" id="methodgetAllLists"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method getAllLists</strong> (line <span class="linenumber">322</span>)
+ </h4> 
+<h4><i>array</i> <strong>&amp;getAllLists(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Function: Retrieve all the stored tagsList objects as an array</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - tagsList object array else False on error</li>
+			<li><strong>version</strong> - 1</li>
+		</ul>
+</div>
+<a name="methodgetByKey" id="methodgetByKey"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method getByKey</strong> (line <span class="linenumber">230</span>)
+ </h4> 
+<h4><i>void</i> <strong>&amp;getByKey(
+string
+$type, [int
+$pid = 0])</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Get a list denoted by its user side key</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $type</strong>: one of TAGS_LISTBLACK, TAGS_LISTWHITE, TAGS_LISTPAGE</li>
+			<li><strong>int $pid</strong>: Page identifier</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<a name="methodgetError" id="methodgetError"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method getError</strong> (line <span class="linenumber">162</span>)
+ </h4> 
+<h4><i>string</i> <strong>getError(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>return last error number and message</h5>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<a name="methodinsert" id="methodinsert"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method insert</strong> (line <span class="linenumber">273</span>)
+ </h4> 
+<h4><i>bool</i> <strong>insert(
+Object
+&$obj)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Write an object back to the database</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Object &$obj</strong>: reference to a TAGS object</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - True if successful</li>
+		</ul>
+</div>
+<a name="methodsetError" id="methodsetError"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method setError</strong> (line <span class="linenumber">134</span>)
+ </h4> 
+<h4><i>void</i> <strong>setError(
+[mixed
+$errnum = 0], [mixed
+$errstr = ''], int
+$errnum=0, string
+$errstr='')</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Set error information</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>int $errnum=0</strong>: Error number</li>
+			<li><strong>string $errstr=''</strong>: Error Message</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<a name="methodtagsListHandler" id="methodtagsListHandler"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method tagsListHandler</strong> (line <span class="linenumber">124</span>)
+ </h4> 
+<h4><i>void</i> <strong>tagsListHandler(
+xoopsDatabase
+&$db)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Constructor</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>xoopsDatabase &$db</strong>: handle for xoops database object</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+	</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Thu, 20 Apr 2006 12:33:34 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC3</a>
+	</div>
+</body>
+</html>
