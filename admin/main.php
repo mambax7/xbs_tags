@@ -10,8 +10,8 @@
 //  (at your option) any later version.                                      //
 //                                                                           //
 //  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source page or any supporting         //
-//  source page which is considered copyrighted (c) material of the          //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
 //  original comment or credit authors.                                      //
 //                                                                           //
 //  This program is distributed in the hope that it will be useful,          //
@@ -30,9 +30,9 @@
 // Module:    XBS MetaTags (TAGS)                                            //
 // ------------------------------------------------------------------------- //
 /**
- * Process tracking data
+ * Admin index page
  *
- * Display tracking stats and allow user to create blacklists.
+ * Display Metatags page index and allow user to operate on records
  *
  * @author     Ashley Kitson http://xoobs.net
  * @copyright  2006 Ashley Kitson, UK
@@ -49,7 +49,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 include_once __DIR__ . '/adminheader.php';
 
 //Display the admin menu
-//xoops_module_admin_menu(3,_AM_TAGS_ADMENU3);
+//xoops_module_admin_menu(1,_AM_TAGS_ADMENU1);
 
 /**
  * To use this as a template you need to write page to display
@@ -65,17 +65,23 @@ global $_POST;
  */
 global $_GET;
 
-if (isset($_POST['submit'])) { //User wants to update tags database with blacklist words
-    if (!adminUpdateBlacklist($_POST['blacklist'])) {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_UPDTFAIL);
-    } else {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_UPDTOK);
+//First process any GETs
+extract($_GET);
+if (isset($edit)) { //edit the page's record
+    adminEditPage($edit);
+} elseif (isset($delete)) {
+    adminDeletePage($delete);
+} elseif (isset($new)) {
+    adminEditPage(0);
+} else { //Process POSTs
+    if (isset($_POST['submit'])) { //Record edit session saved
+        adminSavepage();
+    } elseif (isset($_POST['cancel'])) {
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_CANCELEDIT);
+    } else { //Present a list of page sets to select to work with
+        adminSelectPage();
     }
-} elseif (isset($_POST['cancel'])) {
-    redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_CANCELEUPDT);
-} else { //Present a list of page sets to select to work with
-    adminSelectBlacklist();
-}
+} //end if
 
 /**
  * and here.

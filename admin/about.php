@@ -18,14 +18,12 @@
  * @version      $Id $
  */
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 include_once __DIR__ . '/admin_header.php';
 
 xoops_cp_header();
 
-$indexAdmin = \Xmf\Module\Admin::getInstance();
-
-$indexAdmin->displayNavigation('index.php');
-$indexAdmin->displayIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->setPaypal('xoopsfoundation@gmail.com');
+$adminObject->displayAbout(false);
 
 include_once __DIR__ . '/admin_footer.php';
