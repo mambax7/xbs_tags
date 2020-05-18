@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org/>                             //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -41,19 +42,18 @@
  * @access     private
  * @version    1
  */
-
 if (!defined('XOOPS_ROOT_PATH')) {
     die('XOOPS root path not defined');
 }
 /**
  * XBS TAGS non langaue specific constant definitions
  */
-include_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
 
 $modversion['name']        = _MI_TAGS_NAME;
 $modversion['version']     = 1.0;
 $modversion['description'] = _MI_TAGS_DESC;
-$modversion['credits']     = 'Ashley Kitson<br />( http://xoobs.net/ )<br>Hervé Thouzard />(http://www.herve-thouzard.com)';
+$modversion['credits']     = 'Ashley Kitson<br>( http://xoobs.net/ )<br>Hervé Thouzard>(http://www.herve-thouzard.com)';
 $modversion['author']      = 'Ashley Kitson';
 //$modversion['help'] = "addrhelp.html";
 $modversion['help']        = 'page=help';
@@ -76,7 +76,7 @@ $modversion['min_xoops']           = '2.5.6';
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = [
     'mysql'  => '5.0.7',
-    'mysqli' => '5.0.7'
+    'mysqli' => '5.0.7',
 ];
 
 //$modversion['onUninstall'] = "install_funcs.php";
@@ -135,7 +135,7 @@ $modversion['config'][3]['options'] = [
     _MI_TAGS_KYD1 => TAGS_KEYMETHD_1,  //auto text order
     _MI_TAGS_KYD2 => TAGS_KEYMETHD_2,  //auto least frequent first
     _MI_TAGS_KYD3 => TAGS_KEYMETHD_3,  //auto most frequent first
-    _MI_TAGS_KYD4 => TAGS_KEYMETHD_4
+    _MI_TAGS_KYD4 => TAGS_KEYMETHD_4,
 ]; //use Xoops default keywords
 
 $modversion['config'][4]['name']        = 'max_keys';

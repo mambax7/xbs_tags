@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -17,15 +18,14 @@
  * @author       XOOPS Development Team
  * @version      $Id $
  */
-
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 xoops_cp_header();
 
-$indexAdmin = \Xmf\Module\Admin::getInstance();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-$indexAdmin->displayNavigation('index.php');
-$indexAdmin->displayIndex();
+$adminObject->displayNavigation('index.php');
+$adminObject->displayIndex();
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

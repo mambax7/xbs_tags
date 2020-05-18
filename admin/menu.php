@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org/>                             //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -45,11 +46,10 @@
 /**
  * @global Xoop Configuration
  */
-
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 //$path = dirname(dirname(dirname(__DIR__)));
-//include_once $path . '/mainfile.php';
+//require_once $path . '/mainfile.php';
 
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname(basename(dirname(__DIR__)));
@@ -60,7 +60,7 @@ $pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $module->getInfo('dirmoduleadmin') . 
 if (!file_exists($fileinc = $pathModuleAdmin . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
     $fileinc = $pathModuleAdmin . '/language/english/main.php';
 }
-include_once $fileinc;
+require_once $fileinc;
 
 global $xoopsConfig;
 
@@ -68,9 +68,9 @@ global $xoopsConfig;
  * make sure we have the admin menu language constants loaded
  */
 if (file_exists(XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['language'] . '/admin.php')) {
-    include_once XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['language'] . '/admin.php';
+    require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['language'] . '/admin.php';
 } else {
-    include_once XOOPS_ROOT_PATH . '/modules/xbs_tags/language/english/admin.php';
+    require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/language/english/admin.php';
 }
 
 /**
@@ -78,7 +78,6 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['
  * and use a switch statement on a variable passed to it from here, to keep things
  * simple, use one script per menu option;
  */
-
 $adminmenu              = [];
 $i                      = 0;
 $adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;

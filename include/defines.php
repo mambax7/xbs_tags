@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org/>                             //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -44,7 +45,6 @@
 
 /**#@+
  * Constants for paths to XBS ADRR objects
- *
  */
 
 define('TAGS_DIR', 'xbs_tags');
@@ -59,26 +59,33 @@ define('TAGS_URL', XOOPS_URL . '/modules/' . TAGS_DIR);
  * variable will be pointing to whatever module is currently in scope
  * We therefore need to retrieve the TAGS options
  *
+ * @return array Module config options
  * @version 1
  * @access  private
- * @return array Module config options
  */
 function getTAGSModConfigs()
 {
     static $TAGSModuleConfig;
+
     if (isset($TAGSModuleConfig)) {
         return $TAGSModuleConfig;
     }
+
     global $xoopsDB;
+
     $moduleHandler = new XoopsModuleHandler($xoopsDB);
-    $Module        = $moduleHandler->getByDirname(TAGS_DIR);
+
+    $Module = $moduleHandler->getByDirname(TAGS_DIR);
+
     if ($Module) {
-        $configHandler    = xoops_getHandler('config');
+        $configHandler = xoops_getHandler('config');
+
         $TAGSModuleConfig = $configHandler->getConfigsByCat(0, $Module->getVar('mid'));
+
         return $TAGSModuleConfig;
-    } else { //module couldn't be instantiated - usually because we are trying to install the module and it doesn't exist yet!
-        return false;
-    }
+    }   //module couldn't be instantiated - usually because we are trying to install the module and it doesn't exist yet!
+
+    return false;
 }
 
 /**#@+
@@ -94,29 +101,28 @@ if (isset($cfg)) {
     define('TAGS_CFG_USEPRNT',$cfg['use_parent']);
     define('TAGS_CFG_DECPNT',$cfg['dec_point']);
     */
-} else { //values assigned as backstop defaults
-    /**
-     * @ignore
-     */
-    //define('TAGS_CFG_DEFCURR','GBP');
-    /**
-     * @ignore
-     */
-    //define('TAGS_CFG_DEFORG',0);
-    /**
-     * @ignore
-     */
-    //define('TAGS_CFG_USEPRNT',0);
-    /**
-     * @ignore
-     */
-    //define('TAGS_CFG_DECPNT',2);
-}
+}   //values assigned as backstop defaults
+/**
+ * @ignore
+ */
+//define('TAGS_CFG_DEFCURR','GBP');
+/**
+ * @ignore
+ */
+//define('TAGS_CFG_DEFORG',0);
+/**
+ * @ignore
+ */
+//define('TAGS_CFG_USEPRNT',0);
+/**
+ * @ignore
+ */
+//define('TAGS_CFG_DECPNT',2);
+
 /**#@-*/
 
 /**#@+
  * Constant defs for tables used by TAGS
- *
  */
 define('TAGS_TBL_TAGS', 'tags_index');       //TAGS Configuration
 define('TAGS_TBL_TRACK', 'tags_track');      //TAGS keyword tracking

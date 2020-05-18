@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org/>                             //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -46,18 +47,24 @@
 /**
  * MetaTags constant definitions
  */
-include_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
 
 //check to see if MetaTags module is active
-if (strstr(XOOPS_VERSION, 'XOOPS 2.2')) {
+if (mb_strstr(XOOPS_VERSION, 'XOOPS 2.2')) {
     $moduleHandler = xoops_getHandler('module');
-    $module        = $moduleHandler->create();
+
+    $module = $moduleHandler->create();
+
     $module->loadInfoAsVar(TAGS_DIR);
+
     $v2014 = false; //see below
 } else {
     $module = XoopsModule::getByDirname(TAGS_DIR);
+
     //Need to know if we are running Xoops V2.0.14 as
+
     //they changed theme handling in it
+
     $v2014 = (XOOPS_VERSION == 'XOOPS 2.0.14');
 }
 //check validity of $module
@@ -91,7 +98,9 @@ if ($c > 1) { // there must be subdirectories
     for ($i = 1; $i < $c; $i++) {
         $sub .= '/' . $t2[$i];
     }
-    $t1   = explode($sub, $page);  //and get rid of sub directories
+
+    $t1 = explode($sub, $page);  //and get rid of sub directories
+
     $page = $t1[1];
 }
 //$page is now our key into the MetaTags database
@@ -100,33 +109,48 @@ if ($c > 1) { // there must be subdirectories
 $tagsHandler = xoops_getModuleHandler('tagsPage', TAGS_DIR);
 if ($tagsPage = $tagsHandler->getByKey($page)) {
     //get TAGS module configs
-    $configs =& getTAGSModConfigs();
+
+    $configs = getTAGSModConfigs();
+
     //xoops text sanitizer
+
     $myts = MyTextSanitizer::getInstance();
 
     //Set Page Title
+
     if ($configs['use_title']) {
         //Set the page title from MetaTags database
+
         //This overwrites the default site slogan
+
         $content = $myts->undoHtmlSpecialChars($tagsPage->getVar('tags_title'));
+
         $xoopsTpl->assign('xoops_pagetitle', strip_tags($content));
     }
+
     //Set Page Description
+
     if ($configs['use_desc']) {
         //Set the description from MetaTags database
+
         //This overwrites the default site description
+
         $content = $myts->undoHtmlSpecialChars($tagsPage->getVar('tags_desc'));
+
         if ($v2014) {
             $xoopsTpl->_tpl_vars['xoTheme']->metas['meta']['description'] = strip_tags($content);
         }
+
         $xoopsTpl->assign('xoops_meta_description', strip_tags($content));
     }
+
     //Set Page Keywords dependent on setting for page
+
     switch ($tagsPage->getVar('tags_config')) {
         case TAGS_KEYMETHD_0:       //retrieve list from database
             $content = $tagsPage->getVar('tags_keyword');
             break;
-        case (TAGS_KEYMETHD_1 || TAGS_KEYMETHD_2 || TAGS_KEYMETHD_3):
+        case TAGS_KEYMETHD_1 || TAGS_KEYMETHD_2 || TAGS_KEYMETHD_3:
             $content = $tagsPage->getKeywords($xoopsTpl, $tagsPage->getVar('id'));
             break;
         case TAGS_KEYMETHD_4:       //Use xoops default keyword list
@@ -136,10 +160,12 @@ if ($tagsPage = $tagsHandler->getByKey($page)) {
             unset($content);
             break;
     }
+
     if (isset($content)) {
         if ($v2014) {
             $xoopsTpl->_tpl_vars['xoTheme']->metas['meta']['keywords'] = $content;
         }
+
         $xoopsTpl->assign('xoops_meta_keywords', $content);
     }
 }

@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org/>                             //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -52,13 +53,12 @@ require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
  */
 global $xoopsConfig;
 if (file_exists(TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    include_once TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php';
+    require_once TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php';
 } else {
-    include_once TAGS_PATH . '/language/english/main.php';
+    require_once TAGS_PATH . '/language/english/main.php';
 }
 
 /**
- *
  * A Page Tracking Object
  *
  * @package    TAGS
@@ -68,7 +68,6 @@ if (file_exists(TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php
  */
 class tagsTrack extends XoopsObject
 {
-
     /**
      * Constructor
      *
@@ -78,8 +77,11 @@ class tagsTrack extends XoopsObject
     public function __construct()
     {
         $this->initVar('id', XOBJ_DTYPE_INT, null, true);
+
         $this->initVar('pid', XOBJ_DTYPE_INT, null, true);
+
         $this->initVar('keywords', XOBJ_DTYPE_OTHER);
+
         parent::__construct(); //call ancestor constructor
     }
 }//end class tagsTrack
@@ -89,39 +91,41 @@ class tagsTrack extends XoopsObject
  */
 class xbs_tagstagsTrackHandler extends XoopsObjectHandler
 {
-
     // Public Variables
     /**
      * Set in descendent constructor to name of object that this handler handles
      * @var string
      */
+
     public $classname = 'tagsTrack';
     /**
      * Set in ancestor to name of unique ID generator tag for use with insert function
      * @var string
      */
-    public $ins_tagname = 'ins_tagsTrack';
 
+    public $ins_tagname = 'ins_tagsTrack';
     // Private variables
     /**
      * most recent error number
      * @access private
      * @var int
      */
+
     public $_errno = 0;
     /**
      * most recent error string
      * @access private
      * @var string
      */
+
     public $_error = '';
 
     /**
      * Constructor
      *
-     * @param  xoopsDatabase &$db handle for xoops database object
+     * @param xoopsDatabase &$db handle for xoops database object
      */
-    public function __construct($db)
+    public function __construct(\XoopsDatabase $db)
     {
         parent::__construct($db);
     }
@@ -135,6 +139,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     public function setError($errnum = 0, $errstr = '')
     {
         $this->_errno = $errnum;
+
         $this->_error = $errstr;
     }
 
@@ -165,58 +170,70 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      */
     public function getError()
     {
-        $e = 'Error No ' . (string)$this->_errno . ' - ' . $this->_error;
-        return $e;
+        return 'Error No ' . $this->_errno . ' - ' . $this->_error;
     }
 
     /**
      * Create a new object
      *
-     * @param boolean $isNew =true create a new object and tell it is new.  If False then create object but set it as not new
+     * @param bool $isNew =true create a new object and tell it is new.  If False then create object but set it as not new
      * @return object tagsTrack else False if failure
      */
     public function create($isNew = true)
     {
         $obj = new tagsTrack();
+
         if ($isNew && $obj) { //if it is new and the object was created
             $obj->setNew();
+
             $obj->unsetDirty();
         } else {
             if ($obj) {         //it is not new (forced by caller, usually &getall()) but obj was created
                 $obj->unsetNew();
+
                 $obj->unsetDirty();
             } else {
                 $this->setError(-1, sprintf(_MD_TAGS_ERR_2, $classname));
+
                 return false;      //obj was not created so return False to caller.
             }
         }
+
         return $obj;
-    }// end create function
+    }
+
+    // end create function
 
     /**
      * Get all data for object given id.
      *
-     * @param  int $id data item internal identifier
+     * @param int $id data item internal identifier
      * @return object descendent of tagsTrack
      */
     public function get($id)
     {
         $test = (is_int($id) ? ($id > 0 ? true : false) : !empty($id) ? true : false); //test validity of id
+
         //    $id = intval($id);
+
         if ($test) {
-            $obj =& $this->create(false);
+            $obj = $this->create(false);
+
             if ($obj) {
                 $sql = 'SELECT * FROM ' . $this->db->prefix(TAGS_TBL_TRACK) . ' WHERE id = ' . $id;
 
                 if ($result = $this->db->query($sql)) {
                     if (1 == $this->db->getRowsNum($result)) {
-                        $res             = $this->db->fetchArray($result);
+                        $res = $this->db->fetchArray($result);
+
                         $res['keywords'] = unserialize($res['keywords']);
+
                         $obj->assignVars($res);
+
                         return $obj;
-                    } else {
-                        $this->setError(-1, sprintf(_MD_TAGS_ERR_1, (string)$id));
                     }
+
+                    $this->setError(-1, sprintf(_MD_TAGS_ERR_1, (string)$id));
                 } else {
                     $this->setError($this->db->errno(), $this->db->error());
                 }//end if
@@ -224,9 +241,13 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
         } else {
             $this->setError(-1, sprintf(_MD_TAGS_ERR_1, (string)$id));
         }//end if
+
         $ret = false;
+
         return $ret; //default return
-    }//end function &get
+    }
+
+    //end function &get
 
     /**
      * Insert sql string
@@ -238,8 +259,8 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     public function _ins_insert($obj)
     {
         $keys = serialize($obj->getVar('keywords'));
-        $sql  = sprintf('INSERT INTO %s (pid, keywords) VALUES (%u,%s)', $this->db->prefix(TAGS_TBL_TRACK), $obj->getVar('pid'), $this->db->quoteString($keys));
-        return $sql;
+
+        return sprintf('INSERT INTO %s (pid, keywords) VALUES (%u,%s)', $this->db->prefix(TAGS_TBL_TRACK), $obj->getVar('pid'), $this->db->quoteString($keys));
     }
 
     /**
@@ -252,8 +273,8 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     public function _ins_update($obj)
     {
         $keys = serialize($obj->getVar('keywords'));
-        $sql  = sprintf('UPDATE %s SET pid = %u, keywords = %u WHERE id = %u', $this->db->prefix(TAGS_TBL_TRACK), $obj->getVar('pid'), $this->db->quoteString($keys), $obj->getVar('id'));
-        return $sql;
+
+        return sprintf('UPDATE %s SET pid = %u, keywords = %u WHERE id = %u', $this->db->prefix(TAGS_TBL_TRACK), $obj->getVar('pid'), $this->db->quoteString($keys), $obj->getVar('id'));
     }
 
     /**
@@ -262,33 +283,42 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return  bool           True if successful
      */
-
     public function insert(XoopsObject $obj)
     {
         if (!$obj->isDirty()) {
             return true;
         }    // if data is untouched then don't save
+
         if ($obj->isNew()) {
             //next line not really required for mysql, but left in for future compatibility
+
             $obj->setVar('id', $this->db->genId($this->ins_tagname));
         }
+
         //get the sql for insert or update
+
         $sql = ($obj->isNew() ? $this->_ins_insert($obj) : $this->_ins_update($obj));
+
         if (!$result = $this->db->queryF($sql)) {
             $this->setError($this->db->errno(), $this->db->error());
+
             return false;
-        } else {
-            $obj->unsetDirty(); //It has been saved so now it is clean
         }
+
+        $obj->unsetDirty(); //It has been saved so now it is clean
 
         if ($obj->isNew()) { //retrieve the new internal id for the code and store
             $id = $this->db->getInsertId();
+
             $obj->setVar('id', $id);
+
             $obj->unsetNew();  //it's been saved so it's not new anymore
         }
 
         return true;
-    }//end function insert
+    }
+
+    //end function insert
 
     /**
      * Delete object from the database
@@ -299,14 +329,19 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     public function delete(XoopsObject $obj)
     {
         $sql = sprintf('DELETE FROM %s WHERE id = %u', $this->db->prefix(TAGS_TBL_TRACK), (int)$obj->getVar('id'));
+
         if (!$result = $this->db->queryF($sql)) {
             $this->setError($this->db->errno(), $this->db->error());
+
             return false;
-        } else {
-            unset($obj);
-            return true;
         }
-    } //end function delete
+
+        unset($obj);
+
+        return true;
+    }
+
+    //end function delete
 
     /**
      * Delete all tracks for a page
@@ -317,11 +352,13 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     public function deleteForPage($page)
     {
         $tracks = $this->getPageTracks((int)$page);
+
         foreach ($tracks as $track) {
             if (!$this->delete($track)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -330,49 +367,61 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      *
      *
      *
-     * @version 1
      * @return array tagsTrack object array else False on error
+     * @version 1
      */
-    public function &getAllTracks()
+    public function getAllTracks()
     {
         $ret = [];
+
         $sql = 'SELECT id FROM ' . $this->db->prefix(TAGS_TBL_TRACK) . ' ORDER BY pid,id';
+
         if (!$result = $this->db->query($sql)) {
             $this->setError($this->db->errno(), $this->db->error());
+
             return false;
-        } else {
-            while ($obj = $this->db->fetchArray($result)) {
-                if (!$ret[] = $this->get($obj['id'])) {
-                    return false;
-                }
-            }
-            return $ret;
         }
-    }//end function getAllpages
+
+        while (false !== ($obj = $this->db->fetchArray($result))) {
+            if (!$ret[] = $this->get($obj['id'])) {
+                return false;
+            }
+        }
+
+        return $ret;
+    }
+
+    //end function getAllpages
 
     /**
      * Function: Retrieve all the stored tagsTrack objects for a page as an array
      *
-     * @version 1
      * @param int $page internal identifier for a page
      * @return array tagsTrack object array else False on error
+     * @version 1
      */
     public function getPageTracks($page)
     {
         $ret = [];
+
         $sql = 'SELECT id FROM ' . $this->db->prefix(TAGS_TBL_TRACK) . '  WHERE pid = ' . $page . ' ORDER BY pid,id';
+
         if (!$result = $this->db->query($sql)) {
             $this->setError($this->db->errno(), $this->db->error());
+
             return false;
-        } else {
-            while ($obj = $this->db->fetchArray($result)) {
-                if (!$ret[] = $this->get($obj['id'])) {
-                    return false;
-                }
-            }
-            return $ret;
         }
-    }//end function getPageTracks
+
+        while (false !== ($obj = $this->db->fetchArray($result))) {
+            if (!$ret[] = $this->get($obj['id'])) {
+                return false;
+            }
+        }
+
+        return $ret;
+    }
+
+    //end function getPageTracks
 
     /**
      * Return an array of words from all of the stored page tracks
@@ -389,32 +438,45 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     {
         if ($tracks = $this->getAllTracks()) {
             $keywords = [];
+
             foreach ($tracks as $track) {
                 $keywords = array_merge($keywords, $track->getVar('keywords'));
             }
+
             //strip out words that are too short
+
             $modConfig = getTAGSModConfigs();
-            $minlen    = (int)$modConfig['min_keylen'];
+
+            $minlen = (int)$modConfig['min_keylen'];
+
             foreach ($keywords as $keyword) {
-                if (strlen($keyword) >= $minlen && !is_numeric($keyword)) {
+                if (mb_strlen($keyword) >= $minlen && !is_numeric($keyword)) {
                     $tmp[] = $keyword;
                 }
             }
+
             $keywords = $tmp;
+
             //strip out blacklisted words step #1 - simple word match
+
             if (isset($blacklist)) {
                 $keywords = array_diff($keywords, $blacklist);
 
                 //strip out blacklisted words step #2 - regex search
+
                 $regArray = [];
+
                 foreach ($blacklist as $value) {
-                    $isRegex = (1 == preg_match("/\/.+\//i", $value));
+                    $isRegex = 1 == preg_match("/\/.+\//i", $value);
+
                     if ($isRegex) {
                         $regArray[] = $value;
                     }
                 }
+
                 if (count($regArray) > 0) {  //we have regex's
                     $rBlackList = [];
+
                     foreach ($keywords as $keyword) {
                         foreach ($regArray as $regex) {
                             if (1 == preg_match($regex, $keyword)) {
@@ -422,6 +484,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
                             }
                         }
                     }
+
                     if (count($rBlackList) > 0) {
                         $keywords = array_diff($keywords, $rBlackList);
                     }
@@ -431,18 +494,22 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
             //sort order
             if (TAGS_KEYMETHD_2 == $method) { //least used order
                 $keywords = array_count_values($keywords);
+
                 asort($keywords);
+
                 $keywords = array_keys($keywords);
             } else { //default most used order
                 $keywords = array_count_values($keywords);
+
                 arsort($keywords);
+
                 $keywords = array_keys($keywords);
             }
-            $keywords = array_slice($keywords, 0, $maxwords);
-            return $keywords;
-        } else {
-            return false;
+
+            return array_slice($keywords, 0, $maxwords);
         }
+
+        return false;
     }
 
     /**
@@ -456,28 +523,39 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     {
         if ($tracks = $this->getPageTracks($page)) {
             $keywords = [];
+
             foreach ($tracks as $track) {
                 $keywords = array_merge($keywords, $track->getVar('keywords'));
             }
+
             //reduce to unique words
+
             $keywords = array_unique($keywords);
+
             //strip out words that are too short
+
             $modConfig = getTAGSModConfigs();
-            $minlen    = (int)$modConfig['min_keylen'];
+
+            $minlen = (int)$modConfig['min_keylen'];
+
             foreach ($keywords as $keyword) {
-                if (strlen($keyword) >= $minlen && !is_numeric($keyword)) {
+                if (mb_strlen($keyword) >= $minlen && !is_numeric($keyword)) {
                     $tmp[] = $keyword;
                 }
             }
+
             $keywords = $tmp;
+
             //strip out blacklisted words
+
             if (isset($blacklist)) {
                 $keywords = array_diff($keywords, $blacklist);
             }
+
             return $keywords;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -489,13 +567,16 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     public function countTracks($page)
     {
         $sql = 'SELECT count(*) AS c FROM ' . $this->db->prefix(TAGS_TBL_TRACK) . ' WHERE pid = ' . $page;
+
         if (!$result = $this->db->query($sql)) {
             $this->setError($this->db->errno(), $this->db->error());
+
             return false;
-        } else {
-            $tmp = $this->db->fetchArray($result);
-            return $tmp['c'];
         }
+
+        $tmp = $this->db->fetchArray($result);
+
+        return $tmp['c'];
     }
 
     /**
@@ -506,17 +587,26 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      */
     public function saveTrack($keywords, $pageId)
     {
-        $pageId    = (int)$pageId;
+        $pageId = (int)$pageId;
+
         $modConfig = getTAGSModConfigs();
+
         //see if we need to save any more page keyword tracks
+
         $sql = 'SELECT count(pid) AS c FROM ' . $this->db->prefix(TAGS_TBL_TRACK) . ' WHERE pid = ' . $pageId;
+
         if ($result = $this->db->query($sql)) {
             $ret = $this->db->fetchArray($result);
+
             if ($ret['c'] <= $modConfig['max_tracks']) {
                 //OK to save another track
-                $track =& $this->create();
+
+                $track = $this->create();
+
                 $track->setVar('pid', $pageId);
+
                 $track->setVar('keywords', $keywords);
+
                 $this->insert($track);
             }
         }

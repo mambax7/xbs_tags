@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Constant definitions that are language specific rather than module specific
  *

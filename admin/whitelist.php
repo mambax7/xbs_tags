@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org/>                             //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -47,7 +48,7 @@
  * Do all the declarations etc needed by an admin page
  */
 $path = dirname(dirname(dirname(__DIR__)));
-include_once __DIR__ . '/adminheader.php';
+require_once __DIR__ . '/adminheader.php';
 
 //Display the admin menu
 //xoops_module_admin_menu(4,_AM_TAGS_ADMENU4);

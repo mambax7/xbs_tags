@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -17,10 +18,9 @@
  * @author       XOOPS Development Team
  * @version      $Id $
  */
-
 $path = dirname(dirname(dirname(__DIR__)));
-include_once $path . '/mainfile.php';
-include_once $path . '/include/cp_functions.php';
+require_once $path . '/mainfile.php';
+require_once $path . '/include/cp_functions.php';
 require_once $path . '/include/cp_header.php';
 
 global $xoopsModule;
