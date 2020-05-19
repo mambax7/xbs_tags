@@ -47,7 +47,7 @@
 /**
  * MetaTags constant definitions
  */
-require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbstags/include/defines.php';
 
 //check to see if MetaTags module is active
 if (mb_strstr(XOOPS_VERSION, 'XOOPS 2.2')) {
@@ -105,8 +105,8 @@ if ($c > 1) { // there must be subdirectories
 }
 //$page is now our key into the MetaTags database
 
-//get the tagsPage object for our page if it exists
-$tagsHandler = xoops_getModuleHandler('tagsPage', TAGS_DIR);
+//get the Page object for our page if it exists
+$tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 if ($tagsPage = $tagsHandler->getByKey($page)) {
     //get TAGS module configs
 

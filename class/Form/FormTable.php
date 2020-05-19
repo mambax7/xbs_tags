@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace XoopsModules\Xbstags\Form;
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -51,7 +53,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
  * @package    TAGS
  * @subpackage Form_Handling
  */
-class tagsTableForm
+class FormTable
 {
     /**
      * Private variables
@@ -194,110 +196,4 @@ class tagsTableForm
         }
     }
     //end function display
-}//end class tagsTableForm
-
-/**
- * Create a module name selection list
- *
- * @package    TAGS
- * @subpackage Form_Handling
- */
-class tagsFormSelectModule extends XoopsFormSelect
-{
-    /**
-     * Constructor
-     *
-     * @param string $caption Caption
-     * @param string $name    "name" attribute
-     * @param mixed  $value   Pre-selected value (or array of them).
-     * @param int    $size    Number of rows. "1" makes a drop-down-list
-     * @param bool   $multi   Allow multiple selections
-     */
-    public function __construct($caption, $name, $value = null, $size = 1, $multi = false)
-    {
-        global $xoopsDB;
-
-        parent::__construct($caption, $name, $value, $size, $multi);
-
-        $mod = new XoopsModuleHandler($xoopsDB);
-
-        $modArray = $mod->getList();
-
-        $this->addOptionArray($modArray);
-    }
-}
-
-/**
- * Create a name selection list of modules that are not yet in the MetaTags database
- *
- * @package    TAGS
- * @subpackage Form_Handling
- */
-class tagsFormSelectNewModule extends XoopsFormSelect
-{
-    /**
-     * Constructor
-     *
-     * @param string $caption Caption
-     * @param string $name    "name" attribute
-     * @param mixed  $value   Pre-selected value (or array of them).
-     * @param int    $size    Number of rows. "1" makes a drop-down-list
-     * @param bool   $multi   Allow multiple selections
-     */
-    public function __construct($caption, $name, $value = null, $size = 1, $multi = false)
-    {
-        global $xoopsDB;
-
-        parent::__construct($caption, $name, $value, $size, $multi);
-
-        //get all loaded modules
-
-        $mod = new XoopsModuleHandler($xoopsDB);
-
-        $modArray = $mod->getList();
-
-        //get modules that are in MetaTags
-
-        $tagsHandler = xoops_getModuleHandler('tagsPage');
-
-        $tagsArray = $tagsHandler->getList();
-
-        //finds the ones we haven't got yet
-
-        $arr = array_diff($modArray, $tagsArray);
-
-        $this->addOptionArray($arr);
-    }
-}
-
-/**
- * Create a TAGS keyword generation method selection list
- *
- * @package    TAGS
- * @subpackage Form_Handling
- */
-class tagsFormSelectMethod extends XoopsFormSelect
-{
-    /**
-     * Constructor
-     *
-     * @param string $caption Caption
-     * @param string $name    "name" attribute
-     * @param mixed  $value   Pre-selected value (or array of them).
-     * @param int    $size    Number of rows. "1" makes a drop-down-list
-     */
-    public function __construct($caption, $name, $value = null, $size = 1)
-    {
-        parent::__construct($caption, $name, $value, $size);
-
-        $this->addOption(TAGS_KEYMETHD_0, TAGS_KEYMETHD_0);
-
-        $this->addOption(TAGS_KEYMETHD_1, TAGS_KEYMETHD_1);
-
-        $this->addOption(TAGS_KEYMETHD_2, TAGS_KEYMETHD_2);
-
-        $this->addOption(TAGS_KEYMETHD_3, TAGS_KEYMETHD_3);
-
-        $this->addOption(TAGS_KEYMETHD_4, TAGS_KEYMETHD_4);
-    }
-}//end class
+}//end class FormTable

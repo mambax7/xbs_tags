@@ -61,3 +61,8 @@ define('_MI_TAGS_TTL0', 'Xoops Title');
 define('_MI_TAGS_TTL1', 'MetaTags Title');
 define('_MI_TAGS_DESC0', 'Xoops Description');
 define('_MI_TAGS_DESC1', 'MetaTags Description');
+
+//Menu
+define('_MI_TAGS_MENU_HOME', 'Home');
+define('_MI_TAGS_MENU_01', 'Admin');
+define('_MI_TAGS_MENU_ABOUT', 'About');

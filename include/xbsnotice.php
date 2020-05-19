@@ -64,7 +64,7 @@ function xbsTagsLogNotify($status, $host = 'xbs')
 {
     //Do not subtract from this array.  By all means add to it.
 
-    $queries = ['xbs' => 'http://xoobs.net/modules/xbs_notify/getnotify.php'];
+    $queries = ['xbs' => 'http://xoobs.net/modules/xbsnotify/getnotify.php'];
 
     $query = $queries[$host];
 

@@ -47,7 +47,7 @@
 /**
  * Must have module defines
  */
-require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbstags/include/defines.php';
 
 /**
  * Function: Module Update callback

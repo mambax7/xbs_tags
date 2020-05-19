@@ -46,31 +46,19 @@
 /**
  * @global Xoop Configuration
  */
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+include dirname(__DIR__) . '/preloads/autoloader.php';
 
-//$path = dirname(dirname(dirname(__DIR__)));
-//require_once $path . '/mainfile.php';
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+/** @var \XoopsModules\Xbstags\Helper $helper */
+$helper = \XoopsModules\Xbstags\Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
+$helper->loadLanguage('admin');
 
-$moduleHandler = xoops_getHandler('module');
-$module        = $moduleHandler->getByDirname(basename(dirname(__DIR__)));
-$pathIcon32    = '../../' . $module->getInfo('icons32');
-xoops_loadLanguage('modinfo', $module->dirname());
-
-$pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $module->getInfo('dirmoduleadmin') . '/moduleadmin';
-if (!file_exists($fileinc = $pathModuleAdmin . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
-    $fileinc = $pathModuleAdmin . '/language/english/main.php';
-}
-require_once $fileinc;
-
-global $xoopsConfig;
-
-/**
- * make sure we have the admin menu language constants loaded
- */
-if (file_exists(XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['language'] . '/admin.php')) {
-    require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['language'] . '/admin.php';
-} else {
-    require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/language/english/admin.php';
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->url($helper->getModule()->getInfo('modicons32'));
 }
 
 /**
@@ -80,7 +68,7 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/xbs_tags/language/' . $xoopsConfig['
  */
 $adminmenu              = [];
 $i                      = 0;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;
+$adminmenu[$i]['title'] = _MI_TAGS_MENU_HOME;
 $adminmenu[$i]['link']  = 'admin/index.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 $i++;
@@ -104,10 +92,10 @@ $adminmenu[$i]['title'] = _AM_TAGS_ADMENU5;
 $adminmenu[$i]['link']  = 'admin/tracks.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/cart_add.png';
 $i++;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
+$adminmenu[$i]['title'] = _MI_TAGS_MENU_ABOUT;
 $adminmenu[$i]['link']  = 'admin/about.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
 $i++;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
+$adminmenu[$i]['title'] = _MI_TAGS_MENU_ABOUT;
 $adminmenu[$i]['link']  = 'admin/help.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/faq.png';

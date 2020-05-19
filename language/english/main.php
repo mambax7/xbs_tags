@@ -15,8 +15,8 @@
  * Language specific definitions
  */
 
-define('_MD_TAGS_ERR_1', 'No data for tagsPage object indexed by %s');
-define('_MD_TAGS_ERR_2', 'Unable to instantiate tagsPage %s');
+define('_MD_TAGS_ERR_1', 'No data for Page object indexed by %s');
+define('_MD_TAGS_ERR_2', 'Unable to instantiate Page %s');
 
 define('_MD_TAGS_SAVEPAGE', 'Metatags Data Record Saved');
 define('_MD_TAGS_DELPAGE', 'Metatags Data Record Deleted');

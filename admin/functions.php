@@ -42,6 +42,8 @@
  * @param mixed $maxwords
  */
 
+use XoopsModules\Xbstags\Form;
+
 /**
  * Function: Display list of keywords to add to blacklist
  *
@@ -54,7 +56,7 @@ function adminSelectBlacklist($maxwords = 100)
 {
     //get the existing blacklist
 
-    $blistHandler = xoops_getModuleHandler('tagsList');
+    $blistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
 
     if ($blist = $blistHandler->getByKey(TAGS_LISTBLACK)) {
         $blacklist = $blist->getVar('keywords');
@@ -66,7 +68,7 @@ function adminSelectBlacklist($maxwords = 100)
 
     //get the keyword trackers
 
-    $trackHandler = xoops_getModuleHandler('tagsTrack');
+    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
 
     if (!$tracks = $trackHandler->getAllWords($maxwords, TAGS_KEYMETHD_3, $blacklist)) {
         $tracks = [];
@@ -91,11 +93,11 @@ function adminSelectBlacklist($maxwords = 100)
 
     //regular submit/cancel buttons tray
 
-    $ftray = new XoopsFormElementTray(_AM_FRM1_COLACTION);
+    $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-    $submit = new XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+    $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
 
-    $cancel = new XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
 
     $ftray->addElement($submit);
 
@@ -104,15 +106,15 @@ function adminSelectBlacklist($maxwords = 100)
     //tracked words tray
 
     if (0 == !count($tracks)) {
-        $ftracktray = new XoopsFormElementTray(_AM_FRM4_COL2a);
+        $ftracktray = new \XoopsFormElementTray(_AM_FRM4_COL2a);
 
-        $ftrack = new XoopsFormSelect(_AM_FRM4_COL2, 'track', null, 20, false);
+        $ftrack = new \XoopsFormSelect(_AM_FRM4_COL2, 'track', null, 20, false);
 
         $ftrack->addOptionArray($tracks);
 
         $ftrack->setExtra("multiple='multiple'");
 
-        $insert = new XoopsFormButton('', 'insert', _AM_TAGS_INSERT, 'button');
+        $insert = new \XoopsFormButton('', 'insert', _AM_TAGS_INSERT, 'button');
 
         $insert->setExtra("onclick = 'blistFormAdd()'");
 
@@ -120,12 +122,12 @@ function adminSelectBlacklist($maxwords = 100)
 
         $ftracktray->addElement($insert);
     } else {
-        $ftracktray = new XoopsFormLabel(_AM_FRM4_COL2, _AM_FRM4_COL2b);
+        $ftracktray = new \XoopsFormLabel(_AM_FRM4_COL2, _AM_FRM4_COL2b);
     }
 
-    $editForm = new XoopsThemeForm(_AM_FRM4_TITLE, 'blistform', 'blacklist.php');
+    $editForm = new \XoopsThemeForm(_AM_FRM4_TITLE, 'blistform', 'blacklist.php');
 
-    $fblack = new XoopsFormTextArea(_AM_FRM4_COL1, 'blacklist', implode(',', $blacklist));
+    $fblack = new \XoopsFormTextArea(_AM_FRM4_COL1, 'blacklist', implode(',', $blacklist));
 
     $editForm->addElement($fblack);
 
@@ -163,7 +165,7 @@ function adminSelectBlacklist($maxwords = 100)
  */
 function adminUpdateBlacklist($list)
 {
-    $blistHandler = xoops_getModuleHandler('tagsList');
+    $blistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
 
     if (!$blist = $blistHandler->getByKey(TAGS_LISTBLACK)) {
         $blist = $blistHandler->create();
@@ -195,7 +197,7 @@ function adminSelectWhitelist()
 {
     //get the existing whitelist
 
-    $wlistHandler = xoops_getModuleHandler('tagsList');
+    $wlistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
 
     if ($wlist = $wlistHandler->getByKey(TAGS_LISTWHITE)) {
         $whitelist = $wlist->getVar('keywords');
@@ -207,19 +209,19 @@ function adminSelectWhitelist()
 
     //regular submit/cancel buttons tray
 
-    $ftray = new XoopsFormElementTray(_AM_FRM1_COLACTION);
+    $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-    $submit = new XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+    $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
 
-    $cancel = new XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
 
     $ftray->addElement($submit);
 
     $ftray->addElement($cancel);
 
-    $editForm = new XoopsThemeForm(_AM_FRM5_TITLE, 'wlistform', 'whitelist.php');
+    $editForm = new \XoopsThemeForm(_AM_FRM5_TITLE, 'wlistform', 'whitelist.php');
 
-    $fwhite = new XoopsFormTextArea(_AM_FRM5_COL1, 'whitelist', implode(',', $whitelist));
+    $fwhite = new \XoopsFormTextArea(_AM_FRM5_COL1, 'whitelist', implode(',', $whitelist));
 
     $editForm->addElement($fwhite);
 
@@ -235,7 +237,7 @@ function adminSelectWhitelist()
  */
 function adminUpdateWhitelist($list)
 {
-    $blistHandler = xoops_getModuleHandler('tagsList');
+    $blistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
 
     if (!$blist = $blistHandler->getByKey(TAGS_LISTWHITE)) {
         $blist = $blistHandler->create();
@@ -270,9 +272,9 @@ function adminSelectPage()
 
     $cols = [_AM_FRM1_COL1, _AM_FRM1_COL2, _AM_FRM1_COL3, _AM_FRM1_COL4];
 
-    $table = new tagsTableForm($cols, null, false, TAGS_URL . '/admin/main.php?new=1', TAGS_URL . '/admin/main.php?edit=', TAGS_URL . '/admin/main.php?delete=');
+    $table = new Form\FormTable($cols, null, false, TAGS_URL . '/admin/main.php?new=1', TAGS_URL . '/admin/main.php?edit=', TAGS_URL . '/admin/main.php?delete=');
 
-    $tagsHandler = xoops_getModuleHandler('tagsPage');
+    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 
     $tags = $tagsHandler->getAllPages();
 
@@ -295,7 +297,7 @@ function adminEditPage($id = 0)
 {
     $id = (int)$id;
 
-    $tagsHandler = xoops_getModuleHandler('tagsPage');
+    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 
     if (0 == $id) {
         $tags = $tagsHandler->create();
@@ -303,46 +305,46 @@ function adminEditPage($id = 0)
         $tags = $tagsHandler->get($id);
     }
 
-    $editForm = new XoopsThemeForm(_AM_FRM2_TITLE, 'pageform', 'index.php');
+    $editForm = new \XoopsThemeForm(_AM_FRM2_TITLE, 'pageform', 'index.php');
 
-    $fid = new XoopsFormHidden('id', $id);
+    $fid = new \XoopsFormHidden('id', $id);
 
     if (0 == $id) {
-        $fmid = new XoopsFormHidden('falsemid', 0);
+        $fmid = new \XoopsFormHidden('falsemid', 0);
 
-        $fpid = new XoopsFormHidden('pid', 0);
+        $fpid = new \XoopsFormHidden('pid', 0);
 
-        $fmodule = new tagsFormSelectModule(_AM_FRM2_COL1, 'mid');
+        $fmodule = new FormSelectModule(_AM_FRM2_COL1, 'mid');
 
-        $fname = new XoopsFormText(_AM_FRM2_COL2, 'tags_fname', 30, 255);
+        $fname = new \XoopsFormText(_AM_FRM2_COL2, 'tags_fname', 30, 255);
     } else {
-        $fmid = new XoopsFormHidden('mid', $tags->getVar('mid'));
+        $fmid = new \XoopsFormHidden('mid', $tags->getVar('mid'));
 
-        $fpid = new XoopsFormHidden('pid', $tags->getVar('pid'));
+        $fpid = new \XoopsFormHidden('pid', $tags->getVar('pid'));
 
-        $fmodule = new XoopsFormLabel(_AM_FRM2_COL1, $tags->getVar('tags_modname'));
+        $fmodule = new \XoopsFormLabel(_AM_FRM2_COL1, $tags->getVar('tags_modname'));
 
-        $fname = new XoopsFormLabel(_AM_FRM2_COL2, $tags->getVar('tags_fname'));
+        $fname = new \XoopsFormLabel(_AM_FRM2_COL2, $tags->getVar('tags_fname'));
     }
 
     //Set up additional form fields
 
-    $ftitle = new XoopsFormText(_AM_FRM2_COL3, 'tags_title', 30, 255, $tags->getVar('tags_title'));
+    $ftitle = new \XoopsFormText(_AM_FRM2_COL3, 'tags_title', 30, 255, $tags->getVar('tags_title'));
 
-    $fdesc = new XoopsFormTextArea(_AM_FRM2_COL4, 'tags_desc', $tags->getVar('tags_desc'));
+    $fdesc = new \XoopsFormTextArea(_AM_FRM2_COL4, 'tags_desc', $tags->getVar('tags_desc'));
 
-    $fkeymethod = new tagsFormSelectMethod(_AM_FRM2_COL6, 'tags_config', $tags->getVar('tags_config'));
+    $fkeymethod = new FormSelectMethod(_AM_FRM2_COL6, 'tags_config', $tags->getVar('tags_config'));
 
-    $fmaxkey = new XoopsFormText(_AM_FRM2_COL7, 'tags_maxkeyword', 3, 3, $tags->getVar('tags_maxkeyword'));
+    $fmaxkey = new \XoopsFormText(_AM_FRM2_COL7, 'tags_maxkeyword', 3, 3, $tags->getVar('tags_maxkeyword'));
 
-    $fkeylen = new XoopsFormText(_AM_FRM2_COL8, 'tags_minkeylen', 3, 3, $tags->getVar('tags_minkeylen'));
+    $fkeylen = new \XoopsFormText(_AM_FRM2_COL8, 'tags_minkeylen', 3, 3, $tags->getVar('tags_minkeylen'));
 
     //keywords tray if required
 
     $configs = getTAGSModConfigs();
 
     if (1 == $configs['track_keys']) {
-        $trackHandler = xoops_getModuleHandler('tagsTrack');
+        $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
 
         $pageWords = $trackHandler->getPageWords($id);
 
@@ -357,19 +359,19 @@ function adminEditPage($id = 0)
 
             asort($pageWords);
 
-            $ktray = new XoopsFormElementTray(_AM_FRM2_COL5);
+            $ktray = new \XoopsFormElementTray(_AM_FRM2_COL5);
 
-            $insert = new XoopsFormButton('', 'insert', _AM_TAGS_INSERT);
+            $insert = new \XoopsFormButton('', 'insert', _AM_TAGS_INSERT);
 
             $insert->setExtra("onclick = 'keysFormAdd()'");
 
-            $ftrack = new XoopsFormSelect(_AM_FRM2_COL9 . ' ' . $insert->render(), 'track', null, 5, false);
+            $ftrack = new \XoopsFormSelect(_AM_FRM2_COL9 . ' ' . $insert->render(), 'track', null, 5, false);
 
             $ftrack->addOptionArray($pageWords);
 
             $ftrack->setExtra("multiple='multiple'");
 
-            $ktray->addElement(new XoopsFormTextArea('', 'tags_keyword', $tags->getVar('tags_keyword')));
+            $ktray->addElement(new \XoopsFormTextArea('', 'tags_keyword', $tags->getVar('tags_keyword')));
 
             $ktray->addElement($ftrack);
 
@@ -393,19 +395,19 @@ function adminEditPage($id = 0)
 
             echo $js;
         } else {
-            $ktray = new XoopsFormTextArea(_AM_FRM2_COL5, 'tags_keyword', $tags->getVar('tags_keyword'));
+            $ktray = new \XoopsFormTextArea(_AM_FRM2_COL5, 'tags_keyword', $tags->getVar('tags_keyword'));
         }
     } else {
-        $ktray = new XoopsFormTextArea(_AM_FRM2_COL5, 'tags_keyword', $tags->getVar('tags_keyword'));
+        $ktray = new \XoopsFormTextArea(_AM_FRM2_COL5, 'tags_keyword', $tags->getVar('tags_keyword'));
     }
 
     //buttons tray
 
-    $ftray = new XoopsFormElementTray(_AM_FRM1_COLACTION);
+    $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-    $submit = new XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+    $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
 
-    $cancel = new XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
 
     $ftray->addElement($submit);
 
@@ -465,7 +467,7 @@ function adminSavepage()
 
     global $xoopsDB;
 
-    $tagsHandler = xoops_getModuleHandler('tagsPage');
+    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 
     if (0 == $id) {
         $tags = $tagsHandler->create();
@@ -518,7 +520,7 @@ function adminDeletePage($id)
     $id = (int)$id;  //check it is an integer
 
     if ($id > 0) {
-        $tagsHandler = xoops_getModuleHandler('tagsPage');
+        $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 
         $tags = $tagsHandler->get($id);
 
@@ -537,20 +539,20 @@ function adminDeletePage($id)
  */
 function adminSelectUpdate()
 {
-    $fmodule = new tagsFormSelectNewModule(_AM_FRM3_COL1, 'mid', null, 10, true);
+    $fmodule = new Form\FormSelectNewModule(_AM_FRM3_COL1, 'mid', null, 10, true);
 
     if (count($fmodule->_options) > 0) {
-        $ftray = new XoopsFormElementTray(_AM_FRM1_COLACTION);
+        $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-        $submit = new XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+        $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
 
-        $cancel = new XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+        $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
 
         $ftray->addElement($submit);
 
         $ftray->addElement($cancel);
 
-        $editForm = new XoopsThemeForm(_AM_FRM3_TITLE, 'pageform', 'update.php');
+        $editForm = new \XoopsThemeForm(_AM_FRM3_TITLE, 'pageform', 'update.php');
 
         $editForm->addElement($fmodule);
 
@@ -588,7 +590,7 @@ function adminUpdatePage($mids)
          * If so, process it else do a seach in Xoops for data
          */
 
-        $moduleHandler = new XoopsModuleHandler($xoopsDB);
+        $moduleHandler = new \XoopsModuleHandler($xoopsDB);
 
         $mod = $moduleHandler->get($mid);
 
@@ -738,11 +740,11 @@ function adminSelectTrack()
 
     $cols = [_AM_FRM6_COL1, _AM_FRM6_COL2, _AM_FRM6_COL3, _AM_FRM6_COL4];
 
-    $table = new tagsTableForm($cols, null, true, null, null, TAGS_URL . '/admin/tracks.php?delete=');
+    $table = new Form\FormTable($cols, null, true, null, null, TAGS_URL . '/admin/tracks.php?delete=');
 
-    $tagsHandler = xoops_getModuleHandler('tagsPage');
+    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 
-    $trackHandler = xoops_getModuleHandler('tagsTrack');
+    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
 
     $tags = $tagsHandler->getAllPages();
 
@@ -768,7 +770,7 @@ function adminSelectTrack()
  */
 function adminDeleteTracks($page)
 {
-    $trackHandler = xoops_getModuleHandler('tagsTrack');
+    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
 
     if (!$trackHandler->deleteForPage($page)) {
         redirect_header(TAGS_URL . '/admin/tracks.php', 1, _MD_TAGS_ERRDEL);
@@ -784,9 +786,9 @@ function adminDeleteTracks($page)
  */
 function adminViewtrack($page)
 {
-    $tagsHandler = xoops_getModuleHandler('tagsPage');
+    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
 
-    $trackHandler = xoops_getModuleHandler('tagsTrack');
+    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
 
     $tags = $tagsHandler->get($page);
 
@@ -800,15 +802,15 @@ function adminViewtrack($page)
         $track .= implode(',', $line) . ',<br>';
     }
 
-    $editForm = new XoopsThemeForm(_AM_FRM7_TITLE, 'viewform', 'tracks.php');
+    $editForm = new \XoopsThemeForm(_AM_FRM7_TITLE, 'viewform', 'tracks.php');
 
-    $fmodule = new XoopsFormLabel(_AM_FRM7_COL1, $tags->getVar('tags_modname'));
+    $fmodule = new \XoopsFormLabel(_AM_FRM7_COL1, $tags->getVar('tags_modname'));
 
-    $fscript = new XoopsFormLabel(_AM_FRM7_COL2, $tags->getVar('tags_fname'));
+    $fscript = new \XoopsFormLabel(_AM_FRM7_COL2, $tags->getVar('tags_fname'));
 
-    $ftrack = new XoopsFormLabel(_AM_FRM7_COL3, $track);
+    $ftrack = new \XoopsFormLabel(_AM_FRM7_COL3, $track);
 
-    $cancel = new XoopsFormButton('', 'cancel', _AM_TAGS_GO, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_GO, 'submit');
 
     $editForm->addElement($fmodule);
 

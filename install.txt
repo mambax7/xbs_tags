@@ -23,8 +23,8 @@ insert
 	/**
 	 * Hack by A Kitson to enable XBS MetaTags
 	 */
-	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
-		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php";
 	}
 	/**
 	 * End hack
@@ -42,8 +42,8 @@ Insert
 	/**
 	 * Hack by A Kitson to enable XBS MetaTags
 	 */
-	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
-		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php";
 	}
 	/**
 	 * End hack
@@ -58,8 +58,8 @@ Insert
 	/**
 	 * Hack by A Kitson to enable XBS MetaTags
 	 */
-	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
-		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php";
 	}
 	/**
 	 * End hack
@@ -79,8 +79,8 @@ Insert
 	/**
 	 * Hack by A Kitson to enable XBS MetaTags
 	 */
-	if (file_exists(XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php")) {
-		include XOOPS_ROOT_PATH."/modules/xbs_tags/include/metatags.php";
+	if (file_exists(XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php")) {
+		include XOOPS_ROOT_PATH."/modules/xbstags/include/metatags.php";
 	}
 	/**
 	 * End hack
@@ -93,7 +93,7 @@ Insert
 
 5. To turn off MetaTags, simply deactivate it from the main Modules Administration screen.  There is no need to remove your hack from footer.php.
 
-Read the available documentation by pointing your browser at the /modules/xbs_tags/docs/ directory.  Also read the /modules/xbs_tags/metatags_info.php file to see how you can adapt your modules for inclusion under the metatags scheme.
+Read the available documentation by pointing your browser at the /modules/xbstags/docs/ directory.  Also read the /modules/xbstags/metatags_info.php file to see how you can adapt your modules for inclusion under the metatags scheme.
 
 
 support at http://xoobs.net

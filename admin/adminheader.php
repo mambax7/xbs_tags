@@ -306,10 +306,7 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $modDir . '/language/' . $xoopsC
  * Include TAGS constant defines
  */
 require_once dirname(__DIR__) . '/include/defines.php';
-/**
- * TAGS Form elements
- */
-require_once TAGS_PATH . '/class/class.tags.form.php';
+
 /**
  * TAGS functions
  */

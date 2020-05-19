@@ -47,7 +47,7 @@
  * Constants for paths to XBS ADRR objects
  */
 
-define('TAGS_DIR', 'xbs_tags');
+define('TAGS_DIR', 'xbstags');
 define('TAGS_PATH', XOOPS_ROOT_PATH . '/modules/' . TAGS_DIR);
 define('TAGS_URL', XOOPS_URL . '/modules/' . TAGS_DIR);
 /**#@-*/
@@ -73,7 +73,7 @@ function getTAGSModConfigs()
 
     global $xoopsDB;
 
-    $moduleHandler = new XoopsModuleHandler($xoopsDB);
+    $moduleHandler = new \XoopsModuleHandler($xoopsDB);
 
     $Module = $moduleHandler->getByDirname(TAGS_DIR);
 

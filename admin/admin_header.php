@@ -18,27 +18,44 @@
  * @author       XOOPS Development Team
  * @version      $Id $
  */
-$path = dirname(dirname(dirname(__DIR__)));
-require_once $path . '/mainfile.php';
-require_once $path . '/include/cp_functions.php';
-require_once $path . '/include/cp_header.php';
+include dirname(__DIR__) . '/preloads/autoloader.php';
 
-global $xoopsModule;
+require  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
+//require  dirname(__DIR__) . '/include/common.php';
 
-$thisModuleDir = $GLOBALS['xoopsModule']->getVar('dirname');
+$moduleDirName = basename(dirname(__DIR__));
 
-/** @var Xmf\Module\Admin $adminObject */
+/** @var \XoopsModules\Xbstags\Helper $helper */
+$helper = \XoopsModules\Xbstags\Helper::getInstance();
+
+/** @var \Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-//if functions.php file exist
-//require_once dirname(__DIR__) . '/include/functions.php';
-
 // Load language files
-xoops_loadLanguage('admin', $thisModuleDir);
-xoops_loadLanguage('modinfo', $thisModuleDir);
-xoops_loadLanguage('main', $thisModuleDir);
+$helper->loadLanguage('admin');
+$helper->loadLanguage('modinfo');
+$helper->loadLanguage('common');
+$helper->loadLanguage('main');
 
-$pathIcon16      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons16');
-$pathIcon32      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons32');
-$pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $xoopsModule->getInfo('dirmoduleadmin');
-require_once $pathModuleAdmin . '/moduleadmin/moduleadmin.php';
+xoops_cp_header();
+
+/**
+ * Include the CDM system constant defines as SACC relies on CDM
+ */
+require_once XOOPS_ROOT_PATH . '/modules/xbscdm/include/defines.php';
+/**
+ * Include SACC constant defines
+ */
+require_once dirname(__DIR__) . '/include/defines.php';
+
+/**
+ * CDM functions
+ */
+require_once CDM_PATH . '/include/functions.php';
+/**
+ * SACC functions
+ */
+//require_once TAGS_PATH . '/include/functions.php';
+
+require_once __DIR__ . '/functions.php';

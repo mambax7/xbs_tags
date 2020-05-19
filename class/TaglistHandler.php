@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace XoopsModules\Xbstags;
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -34,7 +36,7 @@
  * Classes used by XBS MetaTags system
  *
  * @package       TAGS
- * @subpackage    tagsList
+ * @subpackage    Taglist
  * @access        private
  * @author        Ashley Kitson http://xoobs.net
  * @copyright (c) 2006 Ashley Kitson, Great Britain
@@ -47,51 +49,17 @@ require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 /**
  * MetaTags constant defines
  */
-require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbstags/include/defines.php';
 /**
  * @global Xoops configuration
  */
 global $xoopsConfig;
-if (file_exists(TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    require_once TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php';
-} else {
-    require_once TAGS_PATH . '/language/english/main.php';
-}
+xoops_loadLanguage('main');
 
 /**
- * A tags list object
- *
- * @package    TAGS
- * @subpackage tagsList
- * @author     Ashley Kitson (http://xoobs.net)
- * @copyright  2006, Ashley Kitson, UK
+ * Class ListHandler
  */
-class tagsList extends XoopsObject
-{
-    /**
-     * Constructor
-     *
-     * The following variables  are set for retrieval with ->getVar()
-     * {@source 2 10}
-     */
-    public function __construct()
-    {
-        $this->initVar('id', XOBJ_DTYPE_INT, null, true);
-
-        $this->initVar('typ', XOBJ_DTYPE_OTHER);
-
-        $this->initVar('pid', XOBJ_DTYPE_INT, null, true);
-
-        $this->initVar('keywords', XOBJ_DTYPE_OTHER);
-
-        parent::__construct(); //call ancestor constructor
-    }
-}//end class tagsList
-
-/**
- * Class xbs_tagstagsListHandler
- */
-class xbs_tagstagsListHandler extends XoopsObjectHandler
+class TaglistHandler extends \XoopsObjectHandler
 {
     // Public Variables
     /**
@@ -99,7 +67,7 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * @var string
      */
 
-    public $classname = 'tagsList';
+    public $classname = 'Taglist';
     /**
      * Set in ancestor to name of unique ID generator tag for use with insert function
      * @var string
@@ -179,18 +147,18 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * Create a new object
      *
      * @param bool $isNew =true create a new object and tell it is new.  If False then create object but set it as not new
-     * @return object tagsList else False if failure
+     * @return object Taglist else False if failure
      */
     public function create($isNew = true)
     {
-        $obj = new tagsList();
+        $obj = new Taglist();
 
         if ($isNew && $obj) { //if it is new and the object was created
             $obj->setNew();
 
             $obj->unsetDirty();
         } else {
-            if ($obj) {         //it is not new (forced by caller, usually &getall()) but obj was created
+            if ($obj) {         //it is not new (forced by caller, usually &getAll()) but obj was created
                 $obj->unsetNew();
 
                 $obj->unsetDirty();
@@ -210,7 +178,7 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * Get all data for object given id.
      *
      * @param int $id data item internal identifier
-     * @return object descendent of tagsList
+     * @return object descendent of Taglist
      */
     public function &get($id)
     {
@@ -275,7 +243,7 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * Insert sql string
      *
      * @access private
-     * @param tagsList object $obj
+     * @param Taglist object $obj
      * @return string SQL string to insert object data into database
      */
     public function _ins_insert($obj)
@@ -289,7 +257,7 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * update sql string
      *
      * @access private
-     * @param tagsList object $obj
+     * @param Taglist object $obj
      * @return string SQL string to update object data into database
      */
     public function _ins_update($obj)
@@ -305,7 +273,7 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return  bool           True if successful
      */
-    public function insert(XoopsObject $obj)
+    public function insert(\XoopsObject $obj)
     {
         if (!$obj->isDirty()) {
             return true;
@@ -348,7 +316,7 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return bool TRUE on success else False
      */
-    public function delete(XoopsObject $obj)
+    public function delete(\XoopsObject $obj)
     {
         $sql = sprintf('DELETE FROM %s WHERE id = %u', $this->db->prefix(TAGS_TBL_LIST), (int)$obj->getVar('id'));
 
@@ -366,11 +334,11 @@ class xbs_tagstagsListHandler extends XoopsObjectHandler
     //end function delete
 
     /**
-     * Function: Retrieve all the stored tagsList objects as an array
+     * Function: Retrieve all the stored Taglist objects as an array
      *
      *
      *
-     * @return array tagsList object array else False on error
+     * @return array Taglist object array else False on error
      * @version 1
      */
     public function getAllLists()

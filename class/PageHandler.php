@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace XoopsModules\Xbstags;
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -34,7 +36,7 @@
  * Classes used by XBS MetaTags system
  *
  * @package       TAGS
- * @subpackage    tagsPage
+ * @subpackage    Page
  * @author        Ashley Kitson http://xoobs.net
  * @copyright (c) 2006 Ashley Kitson, Great Britain
  */
@@ -46,178 +48,17 @@ require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 /**
  * MetaTags constant defines
  */
-require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbstags/include/defines.php';
 /**
  * @global Xoops configuration
  */
 global $xoopsConfig;
-if (file_exists(TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    require_once TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php';
-} else {
-    require_once TAGS_PATH . '/language/english/main.php';
-}
+xoops_loadLanguage('main');
 
 /**
- * A Page MetaTags Object
- *
- * @package    TAGS
- * @subpackage tagsPage
- * @author     Ashley Kitson (http://xoobs.net)
- * @copyright  2006, Ashley Kitson, UK
+ * Class PageHandler
  */
-class tagsPage extends XoopsObject
-{
-    /**
-     * Constructor
-     *
-     * The following variables  are set for retrieval with ->getVar()
-     * {@source 2 10}
-     */
-    public function __construct()
-    {
-        $configs = getTAGSModConfigs();
-
-        $this->initVar('id', XOBJ_DTYPE_INT, null, true);
-
-        $this->initVar('mid', XOBJ_DTYPE_INT, null, true);
-
-        $this->initVar('pid', XOBJ_DTYPE_INT, 0);
-
-        $this->initVar('tags_fname', XOBJ_DTYPE_TXTBOX, null, true, 255);
-
-        $this->initVar('tags_title', XOBJ_DTYPE_TXTBOX, null, false, 255);
-
-        $this->initVar('tags_desc', XOBJ_DTYPE_TXTAREA);
-
-        $this->initVar('tags_keyword', XOBJ_DTYPE_OTHER);
-
-        $this->initVar('tags_config', XOBJ_DTYPE_OTHER, $configs['key_method'], true);
-
-        $this->initVar('tags_maxkeyword', XOBJ_DTYPE_INT, $configs['max_keys'], true);
-
-        $this->initVar('tags_minkeylen', XOBJ_DTYPE_INT, $configs['min_keylen'], true);
-
-        $this->initVar('tags_modname', XOBJ_DTYPE_OTHER, null, false);
-
-        parent::__construct(); //call ancestor constructor
-    }
-
-    /**
-     * Function: get a list of keywords from a template object
-     *
-     * Parses a XoopsTpl object to create a keyword array.
-     * This function is substantially based on work by Hervé Thouzard (http://www.herve-thouzard.com)
-     * in his xoogle for xoops hack.  However, whereas Herve has content for creation of keywords
-     * passed to his function, this finds content in a template object
-     *
-     * @param XoopsTpl $template XoopsTpl template object
-     * @param int      $pageId   internal identifier for page
-     * @return string list of keywords
-     * @version 2
-     */
-    public function getKeywords($template, $pageId)
-    {
-        global $xoopsConfig;
-
-        //get the page output
-
-        $content = $template->fetch($xoopsConfig['theme_set'] . '/theme.html');
-
-        //strip out garbage
-
-        $myts = MyTextSanitizer::getInstance();
-
-        $content = str_replace('<br>', ' ', $content);
-
-        $content = $myts->undoHtmlSpecialChars($content);
-
-        $content = strip_tags($content);
-
-        $content = mb_strtolower($content);
-
-        $search_pattern = ['&nbsp;', "\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '-', '_', '\\', '*'];
-
-        $replace_pattern = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
-
-        $content = str_replace($search_pattern, $replace_pattern, $content);
-
-        //create keywords array
-
-        $keywords = explode(' ', $content);
-
-        //if keyword tracking is enable then save list to database
-
-        // This is the unsorted complete list
-
-        $modConfig = getTAGSModConfigs();
-
-        if (1 == (int)$modConfig['track_keys']) {
-            $trackHandler = xoops_getModuleHandler('tagsTrack', TAGS_DIR);
-
-            $trackHandler->saveTrack($keywords, $pageId);
-        }
-
-        switch ($this->getVar('tags_config')) {
-            case TAGS_KEYMETHD_1:   // Returns keywords in the same order that they were created in the text
-                $keywords = array_unique($keywords);
-                break;
-            case TAGS_KEYMETHD_2:   // the keywords order is made according to the reverse keywords frequency (so the less frequent words appear in first in the list)
-                $keywords = array_count_values($keywords);
-                asort($keywords);
-                $keywords = array_keys($keywords);
-                break;
-            case TAGS_KEYMETHD_3:   // Same as previous, the only difference is that the most frequent words will appear in first in the list
-                $keywords = array_count_values($keywords);
-                arsort($keywords);
-                $keywords = array_keys($keywords);
-                break;
-        } //end switch
-
-        //strip out words that are too short
-
-        $minlen = (int)$this->getVar('tags_minkeylen');
-
-        foreach ($keywords as $keyword) {
-            if (mb_strlen($keyword) >= $minlen && !is_numeric($keyword)) {
-                $tmp[] = $keyword;
-            }
-        }
-
-        //remove blacklisted words if they exist
-
-        $listHandler = xoops_getModuleHandler('tagsList', TAGS_DIR);
-
-        if ($blist = $listHandler->getByKey(TAGS_LISTBLACK)) {
-            $blacklist = $blist->getVar('keywords');
-
-            $tmp = array_diff($tmp, $blacklist);
-        }
-
-        //reduce array to max number of keywords
-
-        $tmp = array_slice($tmp, 0, (int)$this->getVar('tags_maxkeyword'));
-
-        //add whitelisted words if they exist
-
-        if ($wlist = $listHandler->getByKey(TAGS_LISTWHITE)) {
-            $whitelist = $wlist->getVar('keywords');
-
-            $tmp = array_merge($tmp, $whitelist);
-        }
-
-        //shuffle the words so that they appear differently each time
-
-        shuffle($tmp);
-
-        return implode(',', $tmp);
-    }
-    //end function getKeywords
-}//end class tagsPage
-
-/**
- * Class xbs_tagstagsPageHandler
- */
-class xbs_tagstagsPageHandler extends XoopsObjectHandler
+class PageHandler extends \XoopsObjectHandler
 {
     // Public Variables
     /**
@@ -225,7 +66,7 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
      * @var string
      */
 
-    public $classname = 'tagsPage';
+    public $classname = 'Page';
     /**
      * Set in ancestor to name of unique ID generator tag for use with insert function
      * @var string
@@ -305,18 +146,18 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
      * Create a new object
      *
      * @param bool $isNew =true create a new object and tell it is new.  If False then create object but set it as not new
-     * @return object tagsPage else False if failure
+     * @return object Page else False if failure
      */
     public function create($isNew = true)
     {
-        $obj = new tagsPage();
+        $obj = new Page();
 
         if ($isNew && $obj) { //if it is new and the object was created
             $obj->setNew();
 
             $obj->unsetDirty();
         } else {
-            if ($obj) {         //it is not new (forced by caller, usually &getall()) but obj was created
+            if ($obj) {         //it is not new (forced by caller, usually &getAll()) but obj was created
                 $obj->unsetNew();
 
                 $obj->unsetDirty();
@@ -336,7 +177,7 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
      * Get all data for object given id.
      *
      * @param int $id data item internal identifier
-     * @return object descendent of tagsPage
+     * @return object descendent of Page
      */
     public function get($id)
     {
@@ -395,10 +236,10 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
     //end function &get
 
     /**
-     * Get tagsPage object based on user visible index
+     * Get Page object based on user visible index
      *
      * @param mixed $page
-     * @return object tagsPage
+     * @return object Page
      */
     public function getByKey($page)
     {
@@ -499,7 +340,7 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return  bool           True if successful
      */
-    public function insert(XoopsObject $obj)
+    public function insert(\XoopsObject $obj)
     {
         if (!$obj->isDirty()) {
             return true;
@@ -548,7 +389,7 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return bool TRUE on success else False
      */
-    public function delete(XoopsObject $obj)
+    public function delete(\XoopsObject $obj)
     {
         $sql = sprintf('DELETE FROM %s WHERE id = %u', $this->db->prefix(TAGS_TBL_TAGS), (int)$obj->getVar('id'));
 
@@ -566,11 +407,11 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
     //end function delete
 
     /**
-     * Function: Retrieve all the stored tagsPage objects as an array
+     * Function: Retrieve all the stored Page objects as an array
      *
      *
      *
-     * @return array tagsPage object array else False on error
+     * @return array Page object array else False on error
      * @version 1
      */
     public function getAllPages()
@@ -599,7 +440,7 @@ class xbs_tagstagsPageHandler extends XoopsObjectHandler
     /**
      * Return an array which is a list of modules that exist in MetaTags
      *
-     * @return array List of MetaTags modules [mid => 'midname' ..]
+     * @return array Taglist of MetaTags modules [mid => 'midname' ..]
      */
     public function getList()
     {

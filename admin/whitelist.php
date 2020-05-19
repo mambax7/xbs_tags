@@ -48,7 +48,7 @@
  * Do all the declarations etc needed by an admin page
  */
 $path = dirname(dirname(dirname(__DIR__)));
-require_once __DIR__ . '/adminheader.php';
+require_once __DIR__ . '/admin_header.php';
 
 //Display the admin menu
 //xoops_module_admin_menu(4,_AM_TAGS_ADMENU4);

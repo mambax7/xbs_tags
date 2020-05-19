@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace XoopsModules\Xbstags;
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -34,7 +36,7 @@
  * Classes used by XBS MetaTags system
  *
  * @package       TAGS
- * @subpackage    tagsTrack
+ * @subpackage    Track
  * @access        private
  * @author        Ashley Kitson http://xoobs.net
  * @copyright (c) 2006 Ashley Kitson, Great Britain
@@ -47,49 +49,17 @@ require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 /**
  * MetaTags constant defines
  */
-require_once XOOPS_ROOT_PATH . '/modules/xbs_tags/include/defines.php';
+require_once XOOPS_ROOT_PATH . '/modules/xbstags/include/defines.php';
 /**
  * @global Xoops configuration
  */
 global $xoopsConfig;
-if (file_exists(TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    require_once TAGS_PATH . '/language/' . $xoopsConfig['language'] . '/main.php';
-} else {
-    require_once TAGS_PATH . '/language/english/main.php';
-}
+xoops_loadLanguage('main');
 
 /**
- * A Page Tracking Object
- *
- * @package    TAGS
- * @subpackage tagsTrack
- * @author     Ashley Kitson (http://xoobs.net)
- * @copyright  2006, Ashley Kitson, UK
+ * Class TrackHandler
  */
-class tagsTrack extends XoopsObject
-{
-    /**
-     * Constructor
-     *
-     * The following variables  are set for retrieval with ->getVar()
-     * {@source 2 10}
-     */
-    public function __construct()
-    {
-        $this->initVar('id', XOBJ_DTYPE_INT, null, true);
-
-        $this->initVar('pid', XOBJ_DTYPE_INT, null, true);
-
-        $this->initVar('keywords', XOBJ_DTYPE_OTHER);
-
-        parent::__construct(); //call ancestor constructor
-    }
-}//end class tagsTrack
-
-/**
- * Class xbs_tagstagsTrackHandler
- */
-class xbs_tagstagsTrackHandler extends XoopsObjectHandler
+class TrackHandler extends \XoopsObjectHandler
 {
     // Public Variables
     /**
@@ -97,7 +67,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * @var string
      */
 
-    public $classname = 'tagsTrack';
+    public $classname = 'Track';
     /**
      * Set in ancestor to name of unique ID generator tag for use with insert function
      * @var string
@@ -177,18 +147,18 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * Create a new object
      *
      * @param bool $isNew =true create a new object and tell it is new.  If False then create object but set it as not new
-     * @return object tagsTrack else False if failure
+     * @return object Track else False if failure
      */
     public function create($isNew = true)
     {
-        $obj = new tagsTrack();
+        $obj = new Track();
 
         if ($isNew && $obj) { //if it is new and the object was created
             $obj->setNew();
 
             $obj->unsetDirty();
         } else {
-            if ($obj) {         //it is not new (forced by caller, usually &getall()) but obj was created
+            if ($obj) {         //it is not new (forced by caller, usually &getAll()) but obj was created
                 $obj->unsetNew();
 
                 $obj->unsetDirty();
@@ -208,7 +178,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * Get all data for object given id.
      *
      * @param int $id data item internal identifier
-     * @return object descendent of tagsTrack
+     * @return object descendent of Track
      */
     public function get($id)
     {
@@ -253,7 +223,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * Insert sql string
      *
      * @access private
-     * @param tagsTrack object $obj
+     * @param Track object $obj
      * @return string SQL string to insert object data into database
      */
     public function _ins_insert($obj)
@@ -267,7 +237,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * update sql string
      *
      * @access private
-     * @param tagsTrack object $obj
+     * @param Track object $obj
      * @return string SQL string to update object data into database
      */
     public function _ins_update($obj)
@@ -283,7 +253,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return  bool           True if successful
      */
-    public function insert(XoopsObject $obj)
+    public function insert(\XoopsObject $obj)
     {
         if (!$obj->isDirty()) {
             return true;
@@ -326,7 +296,7 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
      * @param \XoopsObject $obj
      * @return bool TRUE on success else False
      */
-    public function delete(XoopsObject $obj)
+    public function delete(\XoopsObject $obj)
     {
         $sql = sprintf('DELETE FROM %s WHERE id = %u', $this->db->prefix(TAGS_TBL_TRACK), (int)$obj->getVar('id'));
 
@@ -363,11 +333,11 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     }
 
     /**
-     * Function: Retrieve all the stored tagsTrack objects as an array
+     * Function: Retrieve all the stored Track objects as an array
      *
      *
      *
-     * @return array tagsTrack object array else False on error
+     * @return array Track object array else False on error
      * @version 1
      */
     public function getAllTracks()
@@ -394,10 +364,10 @@ class xbs_tagstagsTrackHandler extends XoopsObjectHandler
     //end function getAllpages
 
     /**
-     * Function: Retrieve all the stored tagsTrack objects for a page as an array
+     * Function: Retrieve all the stored Track objects for a page as an array
      *
      * @param int $page internal identifier for a page
-     * @return array tagsTrack object array else False on error
+     * @return array Track object array else False on error
      * @version 1
      */
     public function getPageTracks($page)
