@@ -50,7 +50,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once __DIR__ . '/adminheader.php';
 
 //Display the admin menu
-//xoops_module_admin_menu(5,_AM_TAGS_ADMENU5);
+//xoops_module_admin_menu(5,_AM_XBSTAGS_ADMENU5);
 
 /**
  * To use this as a template you need to write page to display

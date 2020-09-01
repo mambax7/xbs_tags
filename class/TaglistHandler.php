@@ -163,7 +163,7 @@ class TaglistHandler extends \XoopsObjectHandler
 
                 $obj->unsetDirty();
             } else {
-                $this->setError(-1, sprintf(_MD_TAGS_ERR_2, $classname));
+                $this->setError(-1, sprintf(_MD_XBSTAGS_ERR_2, $classname));
 
                 return false;      //obj was not created so return False to caller.
             }
@@ -203,13 +203,13 @@ class TaglistHandler extends \XoopsObjectHandler
                         return $obj;
                     }
 
-                    $this->setError(-1, sprintf(_MD_TAGS_ERR_1, (string)$id));
+                    $this->setError(-1, sprintf(_MD_XBSTAGS_ERR_1, (string)$id));
                 } else {
                     $this->setError($this->db->errno(), $this->db->error());
                 }//end if
             }//end if - error value set in call to create()
         } else {
-            $this->setError(-1, sprintf(_MD_TAGS_ERR_1, (string)$id));
+            $this->setError(-1, sprintf(_MD_XBSTAGS_ERR_1, (string)$id));
         }//end if
 
         $ret = false;

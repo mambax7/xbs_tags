@@ -95,9 +95,9 @@ function adminSelectBlacklist($maxwords = 100)
 
     $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-    $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+    $submit = new \XoopsFormButton('', 'submit', _AM_XBSTAGS_SUBMIT, 'submit');
 
-    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_XBSTAGS_CANCEL, 'submit');
 
     $ftray->addElement($submit);
 
@@ -114,7 +114,7 @@ function adminSelectBlacklist($maxwords = 100)
 
         $ftrack->setExtra("multiple='multiple'");
 
-        $insert = new \XoopsFormButton('', 'insert', _AM_TAGS_INSERT, 'button');
+        $insert = new \XoopsFormButton('', 'insert', _AM_XBSTAGS_INSERT, 'button');
 
         $insert->setExtra("onclick = 'blistFormAdd()'");
 
@@ -182,7 +182,7 @@ function adminUpdateBlacklist($list)
     if (!$blistHandler->insert($blist)) {
         redirect_header(TAGS_URL . '/admin/blacklist.php', 1, $tagsHandler->getError());
     } else {
-        redirect_header(TAGS_URL . '/admin/blacklist.php', 1, _MD_TAGS_SAVEPAGE);
+        redirect_header(TAGS_URL . '/admin/blacklist.php', 1, _MD_XBSTAGS_SAVEPAGE);
     }//end if
 }//end function adminUpdateBlacklist
 
@@ -211,9 +211,9 @@ function adminSelectWhitelist()
 
     $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-    $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+    $submit = new \XoopsFormButton('', 'submit', _AM_XBSTAGS_SUBMIT, 'submit');
 
-    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_XBSTAGS_CANCEL, 'submit');
 
     $ftray->addElement($submit);
 
@@ -254,7 +254,7 @@ function adminUpdateWhitelist($list)
     if (!$blistHandler->insert($blist)) {
         redirect_header(TAGS_URL . '/admin/whitelist.php', 1, $tagsHandler->getError());
     } else {
-        redirect_header(TAGS_URL . '/admin/whitelist.php', 1, _MD_TAGS_SAVEPAGE);
+        redirect_header(TAGS_URL . '/admin/whitelist.php', 1, _MD_XBSTAGS_SAVEPAGE);
     }//end if
 }//end function adminUpdateWhitelist
 
@@ -361,7 +361,7 @@ function adminEditPage($id = 0)
 
             $ktray = new \XoopsFormElementTray(_AM_FRM2_COL5);
 
-            $insert = new \XoopsFormButton('', 'insert', _AM_TAGS_INSERT);
+            $insert = new \XoopsFormButton('', 'insert', _AM_XBSTAGS_INSERT);
 
             $insert->setExtra("onclick = 'keysFormAdd()'");
 
@@ -405,9 +405,9 @@ function adminEditPage($id = 0)
 
     $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-    $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+    $submit = new \XoopsFormButton('', 'submit', _AM_XBSTAGS_SUBMIT, 'submit');
 
-    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_XBSTAGS_CANCEL, 'submit');
 
     $ftray->addElement($submit);
 
@@ -506,7 +506,7 @@ function adminSavepage()
     if (!$tagsHandler->insert($tags)) {
         redirect_header(TAGS_URL . '/admin/index.php', 1, $tagsHandler->getError());
     } else {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_TAGS_SAVEPAGE);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_XBSTAGS_SAVEPAGE);
     }//end if
 } //end function adminSavePage
 
@@ -525,13 +525,13 @@ function adminDeletePage($id)
         $tags = $tagsHandler->get($id);
 
         if (!$tagsHandler->delete($tags)) {
-            redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_TAGS_ERRDEL);
+            redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_XBSTAGS_ERRDEL);
         }
     } else {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_TAGS_ERRDEL);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_XBSTAGS_ERRDEL);
     }
 
-    redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_TAGS_DELPAGE);
+    redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_XBSTAGS_DELPAGE);
 }
 
 /**
@@ -544,9 +544,9 @@ function adminSelectUpdate()
     if (count($fmodule->_options) > 0) {
         $ftray = new \XoopsFormElementTray(_AM_FRM1_COLACTION);
 
-        $submit = new \XoopsFormButton('', 'submit', _AM_TAGS_SUBMIT, 'submit');
+        $submit = new \XoopsFormButton('', 'submit', _AM_XBSTAGS_SUBMIT, 'submit');
 
-        $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_CANCEL, 'submit');
+        $cancel = new \XoopsFormButton('', 'cancel', _AM_XBSTAGS_CANCEL, 'submit');
 
         $ftray->addElement($submit);
 
@@ -560,7 +560,7 @@ function adminSelectUpdate()
 
         $editForm->display();
     } else {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_TAGS_ERRNOMODS);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _MD_XBSTAGS_ERRNOMODS);
     }
 }
 
@@ -773,9 +773,9 @@ function adminDeleteTracks($page)
     $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
 
     if (!$trackHandler->deleteForPage($page)) {
-        redirect_header(TAGS_URL . '/admin/tracks.php', 1, _MD_TAGS_ERRDEL);
+        redirect_header(TAGS_URL . '/admin/tracks.php', 1, _MD_XBSTAGS_ERRDEL);
     } else {
-        redirect_header(TAGS_URL . '/admin/tracks.php', 1, _MD_TAGS_DELPAGE);
+        redirect_header(TAGS_URL . '/admin/tracks.php', 1, _MD_XBSTAGS_DELPAGE);
     }
 }
 
@@ -810,7 +810,7 @@ function adminViewtrack($page)
 
     $ftrack = new \XoopsFormLabel(_AM_FRM7_COL3, $track);
 
-    $cancel = new \XoopsFormButton('', 'cancel', _AM_TAGS_GO, 'submit');
+    $cancel = new \XoopsFormButton('', 'cancel', _AM_XBSTAGS_GO, 'submit');
 
     $editForm->addElement($fmodule);
 

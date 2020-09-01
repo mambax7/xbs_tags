@@ -51,7 +51,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once __DIR__ . '/admin_header.php';
 
 //Display the admin menu
-//xoops_module_admin_menu(4,_AM_TAGS_ADMENU4);
+//xoops_module_admin_menu(4,_AM_XBSTAGS_ADMENU4);
 
 /**
  * To use this as a template you need to write page to display
@@ -69,12 +69,12 @@ global $_GET;
 
 if (isset($_POST['submit'])) { //User wants to update tags database with whitelist words
     if (!adminUpdateWhitelist($_POST['whitelist'])) {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_UPDTFAIL);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_UPDTFAIL);
     } else {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_UPDTOK);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_UPDTOK);
     }
 } elseif (isset($_POST['cancel'])) {
-    redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_CANCELEUPDT);
+    redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_CANCELEUPDT);
 } else { //Present a list of page sets to select to work with
     adminSelectWhitelist();
 }

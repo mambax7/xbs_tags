@@ -48,7 +48,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once __DIR__ . '/adminheader.php';
 
 //Display the admin menu
-//xoops_module_admin_menu(2,_AM_TAGS_ADMENU2);
+//xoops_module_admin_menu(2,_AM_XBSTAGS_ADMENU2);
 
 /**
  * To use this as a template you need to write page to display
@@ -62,12 +62,12 @@ require_once __DIR__ . '/adminheader.php';
 
 if (isset($_POST['submit'])) { //User wants to update tags database for module(s)
     if (!adminUpdatePage($_POST['mid'])) {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_UPDTFAIL);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_UPDTFAIL);
     } else {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_UPDTOK);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_UPDTOK);
     }
 } elseif (isset($_POST['cancel'])) {
-    redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_CANCELEUPDT);
+    redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_CANCELEUPDT);
 } else { //Present a list of page sets to select to work with
     adminSelectUpdate();
 }

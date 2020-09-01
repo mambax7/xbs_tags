@@ -50,7 +50,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once __DIR__ . '/adminheader.php';
 
 //Display the admin menu
-//xoops_module_admin_menu(1,_AM_TAGS_ADMENU1);
+//xoops_module_admin_menu(1,_AM_XBSTAGS_ADMENU1);
 
 /**
  * To use this as a template you need to write page to display
@@ -78,7 +78,7 @@ if (isset($edit)) { //edit the page's record
     if (isset($_POST['submit'])) { //Record edit session saved
         adminSavepage();
     } elseif (isset($_POST['cancel'])) {
-        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_TAGS_CANCELEDIT);
+        redirect_header(TAGS_URL . '/admin/index.php', 1, _AM_XBSTAGS_CANCELEDIT);
     } else { //Present a list of page sets to select to work with
         adminSelectPage();
     }

@@ -1,9 +1,20 @@
 <div id="help-template" class="outer">
-    <{include file=$smarty.const._MI_XBSVAT_HELP_HEADER}>
+    <{include file=$smarty.const._MI_XBSTAGS_HELP_HEADER}>
 
     <h4 class="odd">DESCRIPTION</h4> <br>
 
-    <p class="even">This module is ....<br> <br>
+    <p class="even">XBS MetaTags adds Search Engine Optimisation (SEO) facilities to your Xoops web site, in particular it adds the ability to manage html metatag keyword and descriptions on a page by page basis.<br> <br>
+
+        <br>
+
+        More Help information: <a href="<{$xoops_url}>/modules/<{$smarty.const._MI_XBSTAGS_DIRNAME}>/admin/help.php" target="_blank"> XBS Docs</a>
+        <br><br>
+    </p>
+
+    <h4 class="odd"><span style="color: #FF0000; ">NEW: </span>CLASS &amp; FUNCTIONS API</h4><br>
+    <p class="even">
+        For <strong> Class and Function definitions </strong>  see: <a href="<{$xoops_url}>/modules/<{$smarty.const._MI_XBSTAGS_DIRNAME}>/docu/index.html" TARGET="_blank">CDM TAGS Class Documentation </a>
+        <br><br>
     </p>
 
     <h4 class="odd">INSTALL/UNINSTALL</h4>

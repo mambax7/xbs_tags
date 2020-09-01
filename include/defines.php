@@ -124,9 +124,9 @@ if (isset($cfg)) {
 /**#@+
  * Constant defs for tables used by TAGS
  */
-define('TAGS_TBL_TAGS', 'tags_index');       //TAGS Configuration
-define('TAGS_TBL_TRACK', 'tags_track');      //TAGS keyword tracking
-define('TAGS_TBL_LIST', 'tags_list');        //TAGS keyword lists
+define('TAGS_TBL_TAGS', 'xbstags_index');       //TAGS Configuration
+define('TAGS_TBL_TRACK', 'xbstags_track');      //TAGS keyword tracking
+define('TAGS_TBL_LIST', 'xbstags_list');        //TAGS keyword lists
 /**#@-*/
 
 /**#@+
