@@ -2,44 +2,26 @@
 
 namespace XoopsModules\Xbstags\Form;
 
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author:    Ashley Kitson                                                  //
-// Copyright: (c) 2006, Ashley Kitson                                        //
-// URL:       http://xoobs.net                                               //
-// Project:   The XOOPS Project (https://xoops.org/)                      //
-// Module:    XBS MetaTags (TAGS)                                            //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
 /**
  * Classes used by TAGS system to present form data
  *
  * @package       TAGS
  * @subpackage    Form_Handling
- * @author        Ashley Kitson http://xoobs.net
- * @copyright (c) 2006 Ashley Kitson, Great Britain
+ * @copyright     Ashley Kitson
+ * @copyright     XOOPS Project https://xoops.org/
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Ashley Kitson http://akitson.bbcb.co.uk
+ * @author        XOOPS Development Team
  */
 
 /**
@@ -79,12 +61,12 @@ class FormTable
      * i.e they are absolute urls.  Note trailing =.  The value of column 0 (KeyId)
      * will be suffixed to the url string before processing
      *
-     * @param array  $colNames names of columns [0 => rowKeyName, 1 => Col1name .. n => Colnname]
-     * @param string $title    title of table if required
-     * @param bool   $dispKey  display the row key as first column.  If false, you must still supply a column name as the first column in $colNames but it will be ignored and can safely be set to null or ''
-     * @param string $newUrl   url to redirect to add a new record
-     * @param string $editUrl  url to redirect to edit a record
-     * @param string $delUrl   url to redirect to delete a record
+     * @param array $colNames names of columns [0 => rowKeyName, 1 => Col1name .. n => Colnname]
+     * @param null  $title    title of table if required
+     * @param bool  $dispKey  display the row key as first column.  If false, you must still supply a column name as the first column in $colNames but it will be ignored and can safely be set to null or ''
+     * @param null  $newUrl   url to redirect to add a new record
+     * @param null  $editUrl  url to redirect to edit a record
+     * @param null  $delUrl   url to redirect to delete a record
      */
     public function __construct($colNames, $title = null, $dispKey = true, $newUrl = null, $editUrl = null, $delUrl = null)
     {

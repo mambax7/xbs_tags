@@ -1,48 +1,32 @@
 <?php declare(strict_types=1);
 
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author:    Ashley Kitson                                                  //
-// Copyright: (c) 2006, Ashley Kitson                                        //
-// URL:       http://xoobs.net                                               //
-// Project:   The XOOPS Project (https://xoops.org/)                      //
-// Module:    XBS MetTags (TAGS)                                             //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * Admin page functions
  *
- * @author     Ashley Kitson http://xoobs.net
- * @copyright  2006 Ashley Kitson, UK
- * @package    TAGS
- * @subpackage Admin
- * @access     private
- * @version    1
  * @param mixed $maxwords
+ * @copyright     XOOPS Project https://xoops.org/
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Ashley Kitson http://akitson.bbcb.co.uk
+ * @author        XOOPS Development Team
+ * @package       TAGS
+ * @subpackage    Admin
+ * @access        private
+ * @version       1
+ * @copyright     Ashley Kitson
  */
 
 use XoopsModules\Xbstags\Form;
+use XoopsModules\Xbstags\Helper;
 
 /**
  * Function: Display list of keywords to add to blacklist
@@ -56,7 +40,7 @@ function adminSelectBlacklist($maxwords = 100)
 {
     //get the existing blacklist
 
-    $blistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
+    $blistHandler = Helper::getInstance()->getHandler('Taglist');
 
     if ($blist = $blistHandler->getByKey(TAGS_LISTBLACK)) {
         $blacklist = $blist->getVar('keywords');
@@ -68,7 +52,7 @@ function adminSelectBlacklist($maxwords = 100)
 
     //get the keyword trackers
 
-    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
+    $trackHandler = Helper::getInstance()->getHandler('Track');
 
     if (!$tracks = $trackHandler->getAllWords($maxwords, TAGS_KEYMETHD_3, $blacklist)) {
         $tracks = [];
@@ -165,7 +149,7 @@ function adminSelectBlacklist($maxwords = 100)
  */
 function adminUpdateBlacklist($list)
 {
-    $blistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
+    $blistHandler = Helper::getInstance()->getHandler('Taglist');
 
     if (!$blist = $blistHandler->getByKey(TAGS_LISTBLACK)) {
         $blist = $blistHandler->create();
@@ -197,7 +181,7 @@ function adminSelectWhitelist()
 {
     //get the existing whitelist
 
-    $wlistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
+    $wlistHandler = Helper::getInstance()->getHandler('Taglist');
 
     if ($wlist = $wlistHandler->getByKey(TAGS_LISTWHITE)) {
         $whitelist = $wlist->getVar('keywords');
@@ -237,7 +221,7 @@ function adminSelectWhitelist()
  */
 function adminUpdateWhitelist($list)
 {
-    $blistHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Taglist');
+    $blistHandler = Helper::getInstance()->getHandler('Taglist');
 
     if (!$blist = $blistHandler->getByKey(TAGS_LISTWHITE)) {
         $blist = $blistHandler->create();
@@ -274,7 +258,7 @@ function adminSelectPage()
 
     $table = new Form\FormTable($cols, null, false, TAGS_URL . '/admin/main.php?new=1', TAGS_URL . '/admin/main.php?edit=', TAGS_URL . '/admin/main.php?delete=');
 
-    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
+    $tagsHandler = Helper::getInstance()->getHandler('Page');
 
     $tags = $tagsHandler->getAllPages();
 
@@ -297,7 +281,7 @@ function adminEditPage($id = 0)
 {
     $id = (int)$id;
 
-    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
+    $tagsHandler = Helper::getInstance()->getHandler('Page');
 
     if (0 == $id) {
         $tags = $tagsHandler->create();
@@ -314,7 +298,7 @@ function adminEditPage($id = 0)
 
         $fpid = new \XoopsFormHidden('pid', 0);
 
-        $fmodule = new FormSelectModule(_AM_FRM2_COL1, 'mid');
+        $fmodule = new Form\FormSelectModule(_AM_FRM2_COL1, 'mid');
 
         $fname = new \XoopsFormText(_AM_FRM2_COL2, 'tags_fname', 30, 255);
     } else {
@@ -333,7 +317,7 @@ function adminEditPage($id = 0)
 
     $fdesc = new \XoopsFormTextArea(_AM_FRM2_COL4, 'tags_desc', $tags->getVar('tags_desc'));
 
-    $fkeymethod = new FormSelectMethod(_AM_FRM2_COL6, 'tags_config', $tags->getVar('tags_config'));
+    $fkeymethod = new Form\FormSelectMethod(_AM_FRM2_COL6, 'tags_config', $tags->getVar('tags_config'));
 
     $fmaxkey = new \XoopsFormText(_AM_FRM2_COL7, 'tags_maxkeyword', 3, 3, $tags->getVar('tags_maxkeyword'));
 
@@ -344,7 +328,7 @@ function adminEditPage($id = 0)
     $configs = getTAGSModConfigs();
 
     if (1 == $configs['track_keys']) {
-        $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
+        $trackHandler = Helper::getInstance()->getHandler('Track');
 
         $pageWords = $trackHandler->getPageWords($id);
 
@@ -467,7 +451,7 @@ function adminSavepage()
 
     global $xoopsDB;
 
-    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
+    $tagsHandler = Helper::getInstance()->getHandler('Page');
 
     if (0 == $id) {
         $tags = $tagsHandler->create();
@@ -520,7 +504,7 @@ function adminDeletePage($id)
     $id = (int)$id;  //check it is an integer
 
     if ($id > 0) {
-        $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
+        $tagsHandler = Helper::getInstance()->getHandler('Page');
 
         $tags = $tagsHandler->get($id);
 
@@ -602,7 +586,7 @@ function adminUpdatePage($mids)
 
         unset($moduleHandler);
 
-        if (file_exists($fname)) {  //get info from configuration file
+        if (is_file($fname)) {  //get info from configuration file
             include $fname;
 
             if (isset($metatags)) {
@@ -666,17 +650,17 @@ function adminUpdatePage($mids)
 
         $lname = XOOPS_ROOT_PATH . '/modules/' . $fbits[2] . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
 
-        if (!file_exists($lname)) {
+        if (!is_file($lname)) {
             $lname = XOOPS_ROOT_PATH . '/modules/' . $fbits[2] . '/language/english/modinfo.php';
 
-            if (!file_exists($lname)) {
+            if (!is_file($lname)) {
                 unset($lname);
             }
         }
 
         $pid = 1;
 
-        if (file_exists($fname)) {
+        if (is_file($fname)) {
             if (isset($lname)) {
                 include $lname; //language constants
             }
@@ -742,9 +726,9 @@ function adminSelectTrack()
 
     $table = new Form\FormTable($cols, null, true, null, null, TAGS_URL . '/admin/tracks.php?delete=');
 
-    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
+    $tagsHandler = Helper::getInstance()->getHandler('Page');
 
-    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
+    $trackHandler = Helper::getInstance()->getHandler('Track');
 
     $tags = $tagsHandler->getAllPages();
 
@@ -770,7 +754,7 @@ function adminSelectTrack()
  */
 function adminDeleteTracks($page)
 {
-    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
+    $trackHandler = Helper::getInstance()->getHandler('Track');
 
     if (!$trackHandler->deleteForPage($page)) {
         redirect_header(TAGS_URL . '/admin/tracks.php', 1, _MD_XBSTAGS_ERRDEL);
@@ -786,9 +770,9 @@ function adminDeleteTracks($page)
  */
 function adminViewtrack($page)
 {
-    $tagsHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Page');
+    $tagsHandler = Helper::getInstance()->getHandler('Page');
 
-    $trackHandler = \XoopsModules\Xbstags\Helper::getInstance()->getHandler('Track');
+    $trackHandler = Helper::getInstance()->getHandler('Track');
 
     $tags = $tagsHandler->get($page);
 

@@ -5,12 +5,15 @@
  *
  * This is the language specific file for UK English language
  *
- * @author     Ashley Kitson http://xoobs.net
- * @copyright  2006 Ashley Kitson, UK
- * @package    TAGS
- * @subpackage Definitions
- * @access     private
- * @version    1
+ * @copyright     Ashley Kitson
+ * @copyright     XOOPS Project https://xoops.org/
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Ashley Kitson http://akitson.bbcb.co.uk
+ * @author        XOOPS Development Team
+ * @package       TAGS
+ * @subpackage    Definitions
+ * @access        private
+ * @version       1
  */
 
 /**#@+

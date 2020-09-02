@@ -14,6 +14,7 @@ namespace XoopsModules\Xbstags;
  WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  *
  * @license      https://www.fsf.org/copyleft/gpl.html GNU public license
@@ -23,7 +24,8 @@ namespace XoopsModules\Xbstags;
 
 use XoopsModules\Xbstags;
 use XoopsModules\Xbstags\Common;
-use XoopsModules\Xbstags\Constants;
+
+//use XoopsModules\Xbstags\Constants;
 
 /**
  * Class Utility

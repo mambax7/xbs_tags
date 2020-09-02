@@ -1,11 +1,15 @@
 <?php declare(strict_types=1);
 
-// Author:    Ashley Kitson                                                  //
-// Copyright: (c) 2005, Ashley Kitson
-// URL:       http://xoobs.net                                               //
-// Project:   The XOOPS Project (https://xoops.org/)                      //
-// Module:    XBS Notify (XBSNOTIFY)                                            //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * As part of your usage of this module you agree that installations and
  * uninstalls are registered with the code owner.  You may not remove this
@@ -86,7 +90,7 @@ function xbsTagsLogNotify($status, $host = 'xbs')
 
     //been read in.  We need to ensure it is our module.
 
-    if (file_exists(TAGS_PATH . '/language/english/modinfo.php')) {
+    if (is_file(TAGS_PATH . '/language/english/modinfo.php')) {
         require_once TAGS_PATH . '/language/english/modinfo.php';
     }
 

@@ -17,8 +17,7 @@
 use Xmf\Database\TableLoad;
 use \Xmf\Request;
 use Xmf\Yaml;
-use XoopsModules\Xbstags\{
-    Helper,
+use XoopsModules\Xbstags\{Helper,
     Common\Configurator,
     Utility
 };

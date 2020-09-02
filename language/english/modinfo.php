@@ -6,12 +6,15 @@
  * English UK language definitions for module installation
  * Read the source file for definitions
  *
- * @author     Ashley Kitson http://xoobs.net
- * @copyright  2005 Ashley Kitson, UK
- * @package    TAGS
- * @subpackage Definitions
- * @access     private
- * @version    1
+ * @copyright (c) 2004, Ashley Kitson
+ * @copyright     XOOPS Project https://xoops.org/
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Ashley Kitson http://akitson.bbcb.co.uk
+ * @author        XOOPS Development Team
+ * @package       TAGS
+ * @subpackage    Definitions
+ * @access        private
+ * @version       1
  */
 
 /**
@@ -68,7 +71,7 @@ define('_MI_XBSTAGS_MENU_01', 'Admin');
 define('_MI_XBSTAGS_MENU_ABOUT', 'About');
 
 //Help
-define('_MI_XBSTAGS_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_XBSTAGS_DIRNAME', basename(dirname(__DIR__, 2)));
 define('_MI_XBSTAGS_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_XBSTAGS_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_XBSTAGS_OVERVIEW', 'Overview');

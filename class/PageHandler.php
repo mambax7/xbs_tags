@@ -2,43 +2,26 @@
 
 namespace XoopsModules\Xbstags;
 
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author:    Ashley Kitson                                                  //
-// Copyright: (c) 2006, Ashley Kitson                                        //
-// URL:       http://xoobs.net                                               //
-// Project:   The XOOPS Project (https://xoops.org/)                      //
-// Module:    XBS MetaTags (TAGS)                                            //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * Classes used by XBS MetaTags system
  *
  * @package       TAGS
  * @subpackage    Page
- * @author        Ashley Kitson http://xoobs.net
- * @copyright (c) 2006 Ashley Kitson, Great Britain
+ * @copyright     Ashley Kitson
+ * @copyright     XOOPS Project https://xoops.org/
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Ashley Kitson http://akitson.bbcb.co.uk
+ * @author        XOOPS Development Team
  */
 
 /**
@@ -92,7 +75,7 @@ class PageHandler extends \XoopsObjectHandler
     /**
      * Constructor
      *
-     * @param xoopsDatabase &$db handle for xoops database object
+     * @param \XoopsDatabase $db handle for xoops database object
      */
     public function __construct(\XoopsDatabase $db)
     {
@@ -156,16 +139,14 @@ class PageHandler extends \XoopsObjectHandler
             $obj->setNew();
 
             $obj->unsetDirty();
+        } elseif ($obj) {         //it is not new (forced by caller, usually &getAll()) but obj was created
+            $obj->unsetNew();
+
+            $obj->unsetDirty();
         } else {
-            if ($obj) {         //it is not new (forced by caller, usually &getAll()) but obj was created
-                $obj->unsetNew();
+            $this->setError(-1, sprintf(_MD_XBSTAGS_ERR_2, $classname));
 
-                $obj->unsetDirty();
-            } else {
-                $this->setError(-1, sprintf(_MD_XBSTAGS_ERR_2, $classname));
-
-                return false;      //obj was not created so return False to caller.
-            }
+            return false;      //obj was not created so return False to caller.
         }
 
         return $obj;
@@ -181,7 +162,7 @@ class PageHandler extends \XoopsObjectHandler
      */
     public function get($id)
     {
-        $test = (is_int($id) ? ($id > 0 ? true : false) : !empty($id) ? true : false); //test validity of id
+        $test = (is_int($id) ? ($id > 0 ? true : false) : (!empty($id) ? true : false)); //test validity of id
 
         //    $id = intval($id);
 
